@@ -1,0 +1,98 @@
+.containers{
+    width: 1170px !important;
+    /* 这是当前元素在父元素中水平居中，父元素宽度一定大于子元素*/
+    margin: 0 auto;
+    padding: 0px;
+}
+.containers .label{
+    padding: 5em 0px 3em;
+    font-size: 1.4em;
+}
+.containers .list{
+    padding: 0px 1em;
+    box-sizing: border-box;
+
+    display: flex;
+    /*换行*/
+    flex-wrap: wrap;
+}
+.containers .list .item{
+    width:  22%;
+    /*background-color: pink;*/
+    border: 3px solid #fff;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    /*1em = 14px*/
+    margin-bottom: 2em;
+
+    padding: 8px;
+    /*相对定位*/
+    position: relative;
+    /*超出当前标签的隐藏*/
+    overflow: hidden;
+}
+.containers .list .item:hover{
+    border-color:#E07A5F;
+}
+.containers .list .item:nth-child(n+2){
+    margin-left: 4%;
+}
+.containers .list .item:nth-child(4n+1){
+    margin-left: 0px;
+}
+.containers .list .item img{
+    width: 100%;
+}
+.containers .list .item .title{
+    color: #999;
+    font-size: 0.95em;
+    font-family: "Roboto";
+    line-height: 2em;
+}
+.containers .list .item .price{
+    font-weight: bold;
+    line-height: 2em;
+}
+.containers .list .item .btn{
+    text-align: right;
+}
+.containers .list .item .btn button{
+    background-color: #E07A5F;
+    padding: 0.45em 1.4em;
+    border: 1px solid #E07A5F;
+    color: #fff;
+    border-radius: 1em;
+}
+.containers .list .item .btn button:hover{
+    background-color: #fff;
+    color: #E07A5F;
+}
+.containers .list .item .detail{
+    /*绝对定位*/
+    position: absolute;
+    top: 8em;
+    left: -84px;
+    background-color: rgba(0,0,0, 0.5);
+    color: #fff;
+    border-radius: 0.3em;
+    padding: .4em 1em;
+    /*设置当前标签往左移动自身宽度的一半*/
+    /*left: 50%;
+    transform: translateX(-50%);*/
+
+    transition: .3s  all ease;
+}
+.containers .list .item:hover .detail{
+    /*50% 参考父级标签的宽度计算*/
+    left: 50%;
+    /*50% 参考当前标签的宽度计算*/
+    transform: translateX(-50%);
+}
+.containers .list-page{
+    display: flex;
+    justify-content: center;
+}
+footer{
+    background-color: #F2F6F7;
+    padding: 5em 0px;
+}

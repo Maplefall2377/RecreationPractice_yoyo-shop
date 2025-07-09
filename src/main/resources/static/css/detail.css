@@ -1,0 +1,125 @@
+.container{
+    width: 1170px;
+    margin:  5em auto;
+    /* background-color: pink; */
+}
+.goodsinfo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.goodsinfo .info{
+    flex-grow: 1;
+    /* background-color: skyblue; */
+    display: flex;
+    justify-content: space-between;
+}
+.goodsinfo .info .banners{
+    width: 340px;
+    flex-shrink: 0;
+    height: 100px;
+    /* background-color: orange; */
+}
+.goodsinfo .info .banners .big_pic{
+    height: 344px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    /* 移出隐藏 */
+    overflow: hidden;
+    /* 相对定位 */
+    position: relative;
+    
+}
+.goodsinfo .info .banners .big_pic #wrap_scroll{
+    white-space: nowrap;
+    width: 300%;
+    /* 绝对定位 */
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    transition: all .5s ease;
+}
+
+.goodsinfo .info .banners .big_pic img{
+    width: 340px;
+    display: inline-block;
+}
+.goodsinfo .info .banners .small_pic{
+    display: flex;
+    justify-content: space-between;
+    margin-top: .6em;
+}
+.goodsinfo .info .banners .small_pic div{
+    border: 1px solid #ddd;
+    width: 32%;
+    box-sizing: border-box;
+}
+.goodsinfo .info .banners .small_pic img{
+    width: 100%;
+}
+.goodsinfo .info .baseinfo{
+    flex-grow: 1;
+    margin-left: 2em;
+    width: 100px;
+    /* background-color: purple; */
+}
+.goodsinfo .info .baseinfo h2{
+    font-weight: 500;
+    margin-bottom: .5em;
+}
+.goodsinfo .info .baseinfo div{
+    margin: 10px 0px;
+}
+.goodsinfo .info .baseinfo .kinds,.goodsinfo .info .baseinfo .desc{
+    color: #999;
+}
+.goodsinfo .info .baseinfo .price{
+    font-size: 1.3em;
+    line-height: 2em;
+}
+.goodsinfo .info .baseinfo .btn{
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color:coral;
+    color: #fff;
+    font-size: 1.1em;
+    display: inline-block;
+}
+.goodsinfo .hots{
+    width: 30%;
+    /* border: 1px solid #ddd; */
+}
+
+.goodsinfo .hots>.title{
+    font-size: 1.3em;
+    line-height: 2.5em;
+}
+
+.goodsinfo .hots .list{
+    margin-top: 10px;
+}
+.goodsinfo .hots .list .item{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.goodsinfo .hots .list .item a{
+    display: block;
+    justify-content: space-between;
+}
+.goodsinfo .hots .list .item a img{
+    width: 110px;
+    display: inline-block;
+    vertical-align: top;
+}
+.goodsinfo .hots .list .item a .desc{
+    display: inline-block;
+}
+.goodsinfo .hots .list .item a .desc .title{
+    font-size: 1.2em;
+}
+.goodsinfo .hots .list .item a .desc .price{
+    font-size: 1.1em;
+    color: orange;
+    margin-top: 20px;
+}

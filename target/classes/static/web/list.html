@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表页面</title>
+    <!-- 引入外部样式 -->
+    <link rel="stylesheet" href="/css/reset.css"></link>
+    <link rel="stylesheet" href="/css/font.css" />
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4688232_r0dj3sysbq.css">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/common.css" />
+    <link rel="stylesheet" href="/css/list.css" />
+    <!-- 引入外部js文件 -->
+    <script src="/js/jquery-3.7.1.js" ></script>
+    <script src="/js/bootstrap.bundle.min.js" ></script>
+</head>
+<body>
+    <!--头部-->
+    <header>
+    <!--中间区域-->
+    <div class="body">
+        <div class="left">
+            <!-- 左 -->
+            <h1 id="abc">
+                <a href="/web/index.html">YOYO</a>
+            </h1>
+            <!-- 中 -->
+            <ul id="nav">
+                <li><a href="/web/index.html">首页</a></li>
+                <li id="kinds">
+                    <a href="#">商品分类</a>
+                    <div class="drop-select">
+                        <div class="head">
+                            商品分类
+                        </div>
+                        <ul id="allKinds"></ul>
+                    </div>
+                </li>
+                <li id="hots-menu"><a href="/web/list.html?typeId=2">热销</a></li>
+                <li id="news-menu"><a href="/web/list.html?typeId=3">新品</a></li>
+
+            </ul>
+        </div>
+        <!-- 右 -->
+        <div class="right">
+            <a href="javascript:void(0)">
+                <i class="iconfont icon-fangdajing"></i>
+                <!--上箭头-->
+                <div class="up-arrow"></div>
+                <!--搜索布局-->
+                <div class="search">
+                    <input id="kw" type="text" placeholder="请输入商品名称" />
+                    <button id="submit">搜索</button>
+                </div>
+            </a>
+            <a href="/web/carts.html" class="carts">
+                <i class="iconfont icon-gouwuche"></i>
+                <span class="num" id="cart-num"></span>
+            </a>
+            <a href="/web/userInfo.html">
+                <i class="iconfont icon-06_huiyuanguanli"></i>
+            </a>
+        </div>
+    </div>
+</header>
+    <!--中间容器-->
+    <div class="containers">
+        <!--头部-->
+        <div class="label"></div>
+        <ul class="list" id="list">
+
+        </ul>
+        <div class="list-page">
+            <ul class="pagination" id="pagination">
+            </ul>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <footer>
+            <span>
+                lanou © All rights Reseverd
+            </span>
+    </footer>
+    <script>
+        // 获取页面中id=kinds的标签（对象）
+        let kinds = document.querySelector('#kinds')
+        console.log(kinds)
+        // 把你们函数赋值给标签的点击事件
+        let state = false  // false 隐藏  true展示
+        kinds.onclick = function(e){
+            // 阻止冒泡
+            e.stopPropagation()
+            // 触发事件的标签
+            // 获取页面中class="drop-select"的标签只会获取一个
+            let dropSelect = document.querySelector('.drop-select')
+            // 页面中展示标签
+            dropSelect.style = "display:" + (state ? 'none' : 'block')
+            // 记录当前下拉框的显示状态
+            state = !state
+        }
+        document.body.onclick = function(){
+            // 获取页面中class="drop-select"的标签只会获取一个
+            let dropSelect = document.querySelector('.drop-select')
+            // 页面中展示标签
+            dropSelect.style = "display:none"
+            // 隐藏
+            state = false
+        }
+    </script>
+    <script src="/js/common.js"></script>
+    <script src="/js/list.js"></script>
+</body>
+</html>

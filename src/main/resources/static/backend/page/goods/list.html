@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="../../plugins/element-ui/index.css" />
+  <link rel="stylesheet" href="../../styles/common.css" />
+  <link rel="stylesheet" href="../../styles/page.css" />
+  <style lang="scss" scoped>
+    .tableScopeSwitchBox .tableScopeSwitch .el-switch__label {
+      position: absolute;
+      display: none;
+      color: #fff;
+    }
+
+    /*打开时文字位置设置*/
+    .tableScopeSwitchBox .tableScopeSwitch .el-switch__label--right {
+      z-index: 1;
+      right: 6px;
+    }
+
+    /*关闭时文字位置设置*/
+    .tableScopeSwitchBox .tableScopeSwitch .el-switch__label--left {
+      z-index: 1;
+      left: 6px;
+    }
+
+    /*显示文字*/
+    .tableScopeSwitchBox .tableScopeSwitch .el-switch__label.is-active {
+      display: block;
+      text-align: center;
+    }
+
+    /*开关按钮的宽度大小*/
+    .tableScopeSwitchBox .tableScopeSwitch.el-switch .el-switch__core,
+    .tableScopeSwitchBox .el-switch .el-switch__label {
+      width: 50px !important;
+    }
+
+    .blueBugGray {
+      color: #8B8B8B !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-container" id="food-app">
+    <div class="container">
+      <div class="tableBar">
+        <el-input v-model="input" placeholder="请输入商品名称" style="width: 250px" clearable
+          @keyup.enter.native="handleQuery">
+          <i slot="prefix" class="el-input__icon el-icon-search" style="cursor: pointer" @click="init"></i>
+        </el-input>
+
+        <el-select v-model="typeId" placeholder="请选择商品分类" clearable @change="changeGoods($event)">
+          <el-option v-for="(item,index) in typeList" :key="index" :label="item.name" :value="item.id" />
+        </el-select>
+        <el-select v-model="types" placeholder="榜单类型" clearable @change="changeTop($event)">
+          <el-option v-for="(item,index) in topList" :key="index" :label="item.name" :value="item.id" />
+        </el-select>
+        <div class="tableLab">
+          <el-button type="primary" @click="addGoodstype('add')">
+            + 新建商品
+          </el-button>
+        </div>
+      </div>
+
+      <el-table :data="tableData" stripe class="tableBox" @selection-change="handleSelectionChange">
+        <el-table-column prop="name" label="名称" width="200"></el-table-column>
+        <el-table-column prop="cover" label="图片" align="center" width="150">
+          <template slot-scope="{ row }">
+            <el-image style="width: auto; height: 40px; border:none;cursor: pointer;" :src="getImage(row.cover)"
+              :preview-src-list="[ `/common/download?name=${row.cover}` ]">
+              <div slot="error" class="image-slot">
+                <img src="./../../images/noImg.png" style="width: auto; height: 60px; border:none;">
+              </div>
+            </el-image>
+          </template>
+        </el-table-column>
+        <el-table-column prop="intro" label="介绍"></el-table-column>
+        <el-table-column label="价格" width="100">
+          <template slot-scope="scope">
+            <span style="margin-right: 10px;">￥{{ scope.row.price }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="stock" label="库存" width="100"></el-table-column>
+        <el-table-column label="售卖状态" width="150">
+          <template slot-scope="scope">
+            <span style="margin-right: 10px;">{{ scope.row.status == 1 ? '启售' : '停售' }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="260" align="center">
+          <template slot-scope="scope">
+            <el-button type="text" size="small" :class="scope.row.types === 1?'blueBugGray':'blueBug'"
+              @click="topHandle1(scope.row.types,scope.row.tid)">
+              {{ scope.row.types == 1 ? '取消今日推荐' : '加入今日推荐' }}
+            </el-button>
+            <el-button type="text" size="small" :class="scope.row.types === 2?'blueBugGray':'blueBug'"
+              @click="topHandle2(scope.row.types,scope.row.tid)">
+              {{ scope.row.types == 2 ? '取消热销' : '加入热销' }}
+            </el-button>
+            <el-button type="text" size="small" :class="scope.row.types === 3?'blueBugGray':'blueBug'"
+              @click="topHandle3(scope.row.types,scope.row.tid)">
+              {{ scope.row.types == 3 ? '取消新品' : '加入新品' }}
+            </el-button>
+            <el-button type="text" size="small" class="blueBug" @click="addGoodstype(scope.row.id)">
+              修改
+            </el-button>
+
+            <el-button type="text" size="small" class="blueBug" @click="statusHandle(scope.row)">
+              {{ scope.row.status == 1 ? '停售' : '启售' }}
+            </el-button>
+            <el-button type="text" size="small" class="delBut non" @click="deleteHandle(scope.row.id)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-pagination class="pageList" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper" :total="counts" @size-change="handleSizeChange"
+        :current-page.sync="page" @current-change="handleCurrentChange"></el-pagination>
+    </div>
+
+  </div>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="../../plugins/vue/vue.js"></script>
+  <!-- 引入组件库 -->
+  <script src="../../plugins/element-ui/index.js"></script>
+  <!-- 引入axios -->
+  <script src="../../plugins/axios/axios.min.js"></script>
+  <script src="../../js/request.js"></script>
+  <script src="../../api/goods.js"></script>
+  <script src="../../api/types.js"></script>
+
+  <script>
+    new Vue({
+      el: '#food-app',
+      data () {
+        return {
+          input: '',
+          typeId: '',
+          type: '',
+          counts: 0,
+          page: 1,
+          pageSize: 10,
+          typeList: [],
+          tableData: [],
+          dishState: '',
+          checkList: [],
+          topList: [
+            { id: 1, name: '今日推荐' },
+            { id: 2, name: '热销' },
+            { id: 3, name: '新品' },
+          ]
+
+        }
+      },
+      computed: {},
+      created () {
+        this.init()
+        this.getTypeList()
+      },
+      mounted () {
+      },
+      methods: {
+        async init () {
+          const params = {
+            page: this.page,
+            pageSize: this.pageSize,
+            name: this.input ? this.input : undefined,
+            typeId: this.typeId ? this.typeId : undefined,
+            type: this.type ? this.type : undefined
+          }
+          await getGoods(params).then(res => {
+            if (res.code === 0) {
+              this.tableData = res.data.list || []
+              this.counts = res.data.total
+            }
+          }).catch(err => {
+            this.$message.error('请求出错了：' + err)
+          })
+        },
+        getImage (image) {
+          return `/common/download?name=${image}`
+        },
+        handleStatusChange (id, status) {
+          console.log(id, status);
+
+        },
+        handleQuery () {
+          this.page = 1;
+          this.init();
+        },
+        changeGoods (val) {
+          this.typeId = val; //获取商品ID，即option对应的ID值
+          this.page = 1;
+          this.init();
+        },
+        changeTop (val) {
+          this.type = val; //榜单类型(1今日推荐/2热销/3新品)
+          this.page = 1;
+          this.init();
+        },
+        topHandle1 (type, id) {
+          type = type == 1 ? 0 : 1;
+          let params = { type, id }
+          updateTopType(params).then(res => {
+            if (res.code === 0) {
+              this.$message.success('修改成功！')
+              this.handleQuery()
+            } else {
+              this.$message.error(res.msg || '操作失败')
+            }
+          }).catch(err => {
+            this.$message.error('请求出错了：' + err)
+          })
+        },
+        topHandle2 (type, id) {
+          type = type == 2 ? 0 : 2;
+          let params = { type, id }
+          updateTopType(params).then(res => {
+            if (res.code === 0) {
+              this.$message.success('修改成功！')
+              this.handleQuery()
+            } else {
+              this.$message.error(res.msg || '操作失败')
+            }
+          }).catch(err => {
+            this.$message.error('请求出错了：' + err)
+          })
+        },
+        topHandle3 (type, id) {
+          type = type == 3 ? 0 : 3;
+          let params = { type, id }
+          updateTopType(params).then(res => {
+            if (res.code === 0) {
+              this.$message.success('修改成功！')
+              this.handleQuery()
+            } else {
+              this.$message.error(res.msg || '操作失败')
+            }
+          }).catch(err => {
+            this.$message.error('请求出错了：' + err)
+          })
+        },
+        // 获取菜品分类
+        getTypeList () {
+          queryTypeList().then(res => {
+            if (res.code === 0) {
+              this.typeList = res.data
+            } else {
+              this.$message.error(res.msg || '操作失败')
+            }
+          })
+        },
+        // 添加
+        addGoodstype (st) {
+          if (st === 'add') {
+            window.parent.menuHandle({
+              id: '4',
+              url: '/backend/page/goods/add.html',
+              name: '添加商品'
+            }, true)
+          } else {
+            window.parent.menuHandle({
+              id: '4',
+              url: '/backend/page/goods/add.html?id=' + st,
+              name: '修改商品'
+            }, true)
+          }
+        },
+
+        // 删除
+        deleteHandle (id) {
+          this.$confirm('确认删除该商品, 是否继续?', '确定删除', {
+            'confirmButtonText': '确定',
+            'cancelButtonText': '取消',
+          }).then(() => {
+            console.log(id);
+
+            delGoods(id).then(res => {
+              if (res.code === 0) {
+                this.$message.success('删除成功！')
+                this.handleQuery()
+              } else {
+                this.$message.error(res.msg || '操作失败')
+              }
+            }).catch(err => {
+              this.$message.error('请求出错了：' + err)
+            })
+          })
+        },
+
+        //状态修改
+        statusHandle (row) {
+          this.id = row.id
+          this.status = row.status
+          this.$confirm('确认调整该账号的状态?', '提示', {
+            'confirmButtonText': '确定',
+            'cancelButtonText': '取消',
+            'type': 'warning'
+          }).then(() => {
+            updateGoodsStatus({ 'id': this.id, 'status': !this.status ? 1 : 0 }).then(res => {
+              console.log('enableOrDisableEmployee', res)
+              if (res.code === 0) {
+                this.$message.success('账号状态更改成功！')
+                this.handleQuery()
+              }
+            }).catch(err => {
+              this.$message.error('请求出错了：' + err)
+            })
+          })
+        },
+
+        // 全部操作
+        handleSelectionChange (val) {
+          let checkArr = []
+          val.forEach((n) => {
+            checkArr.push(n.id)
+          })
+          this.checkList = checkArr
+        },
+        handleSizeChange (val) {
+          this.pageSize = val
+          this.init()
+        },
+        handleCurrentChange (val) {
+          this.page = val
+          this.init()
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

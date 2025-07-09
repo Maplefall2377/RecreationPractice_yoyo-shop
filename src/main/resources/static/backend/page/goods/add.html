@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="../../plugins/element-ui/index.css" />
+  <link rel="stylesheet" href="../../styles/common.css" />
+  <link rel="stylesheet" href="../../styles/page.css" />
+  <style>
+    .selectInput {
+      position: relative;
+      width: 100%;
+      min-width: 100px;
+    }
+
+    .selectInput .flavorSelect {
+      position: absolute;
+      width: 100%;
+      padding: 0 10px;
+      border-radius: 3px;
+      border: solid 1px #FF903D;
+      line-height: 30px;
+      text-align: center;
+      background: #fff;
+      top: 50px;
+      z-index: 99;
+    }
+
+    .selectInput .flavorSelect .items {
+      cursor: pointer;
+      display: inline-block;
+      width: 100%;
+      line-height: 35px;
+      border-bottom: solid 1px #f4f4f4;
+      color: #666;
+    }
+
+    .selectInput .flavorSelect .none {
+      font-size: 14px;
+    }
+
+    #food-add-app .uploadImg .el-form-item__label::before {
+      content: '*';
+      color: #F56C6C;
+      margin-right: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="addBrand-container" id="food-add-app">
+    <div class="container">
+      <el-form ref="ruleForm" :model="ruleForm" :rules="rules" :inline="true" label-width="180px" class="demo-ruleForm">
+        <div>
+          <el-form-item label="名称:" prop="name">
+            <el-input v-model="ruleForm.name" placeholder="请填写商品名称" maxlength="20" />
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item label="价格:" prop="price">
+            <el-input v-model="ruleForm.price" placeholder="请设置商品价格" />
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item label="介绍:" prop="intro">
+            <el-input v-model="ruleForm.intro" type="textarea" :rows="3" placeholder="商品描述，最长200字" maxlength="200" />
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item label="库存:" prop="stock">
+            <el-input v-model="ruleForm.stock" placeholder="请设置商品库存" />
+          </el-form-item>
+        </div>
+
+        <div>
+          <el-form-item label="封面图片:" prop="cover" class="uploadImg">
+            <el-upload class="avatar-uploader" action="/common/upload" :show-file-list="false"
+              :on-success="handleAvatarSuccess1" :on-change="onChange" ref="upload">
+              <img v-if="cover" :src="cover" class="avatar"></img>
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item label="详情图片1:" prop="image1" class="uploadImg">
+            <el-upload class="avatar-uploader" action="/common/upload" :show-file-list="false"
+              :on-success="handleAvatarSuccess2" :on-change="onChange" ref="upload">
+              <img v-if="image1" :src="image1" class="avatar"></img>
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item label="详情图片2:" prop="image2" class="uploadImg">
+            <el-upload class="avatar-uploader" action="/common/upload" :show-file-list="false"
+              :on-success="handleAvatarSuccess3" :on-change="onChange" ref="upload">
+              <img v-if="image2" :src="image2" class="avatar"></img>
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </div>
+        <div>
+          <el-form-item label="商品分类:" prop="typeId">
+            <el-select v-model="ruleForm.typeId" placeholder="请选择商品分类">
+              <el-option v-for="(item,index) in typeList" :key="index" :label="item.name" :value="item.id" />
+            </el-select>
+          </el-form-item>
+        </div>
+
+        <div class="subBox address">
+          <el-form-item>
+            <el-button @click="goBack()">
+              取消
+            </el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')">
+              保存
+            </el-button>
+            <el-button v-if="actionType == 'add'" type="primary" class="continue"
+              @click="submitForm('ruleForm','goAnd')">
+              保存并继续添加商品
+            </el-button>
+          </el-form-item>
+        </div>
+      </el-form>
+    </div>
+  </div>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="../../plugins/vue/vue.js"></script>
+  <!-- 引入组件库 -->
+  <script src="../../plugins/element-ui/index.js"></script>
+  <!-- 引入axios -->
+  <script src="../../plugins/axios/axios.min.js"></script>
+  <script src="../../js/request.js"></script>
+  <script src="../../js/validate.js"></script>
+  <script src="../../js/index.js"></script>
+  <script src="../../api/goods.js"></script>
+  <script src="../../api/types.js"></script>
+  <script>
+    new Vue({
+      el: '#food-add-app',
+      data () {
+        return {
+          id: '',
+          restKey: 0,
+          textarea: '',
+          value: '',
+          cover: '',
+          image1: '',
+          image2: '',
+          actionType: '',
+          typeList: [],
+          vueRest: '1',
+          index: 0,
+          inputStyle: { 'flex': 1 },
+          ruleForm: {
+            'name': '',
+            'id': '',
+            'price': '',
+            'intro': '',
+            'cover': '',
+            'image1': '',
+            'image2': '',
+            'price': '',
+            'stock': '',
+            'typeId': ''
+          },
+          mak: false
+        }
+      },
+      computed: {
+        rules () {
+          return {
+            'name': [
+              { 'required': true, 'message': '请填写商品名称', 'trigger': 'blur' }
+            ]
+          }
+        }
+      },
+      created () {
+        this.getTypeList()
+        // 口味临时数据
+        // this.getFlavorListHand()
+        this.id = requestUrlParam('id')
+        this.actionType = this.id ? 'edit' : 'add'
+        if (this.id) {
+          this.init()
+        }
+      },
+      mounted () {
+      },
+      methods: {
+        async init () {
+          getGoodsById(this.id).then(res => {
+            console.log(res)
+            if (res.code === 0) {
+              this.ruleForm = { ...res.data }
+              this.ruleForm.price = String(res.data.price)
+              this.cover = `/common/download?name=${res.data.cover}`
+              this.image1 = `/common/download?name=${res.data.image1}`
+              this.image2 = `/common/download?name=${res.data.image2}`
+            } else {
+              this.$message.error(res.msg || '操作失败')
+            }
+          })
+        },
+
+        // 获取商品分类
+        getTypeList () {
+          queryTypeList().then(res => {
+            if (res.code === 0) {
+              this.typeList = res.data
+            } else {
+              this.$message.error(res.msg || '操作失败')
+            }
+          })
+        },
+
+        submitForm (formName, st) {
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              let params = { ...this.ruleForm }
+              params.status = this.ruleForm ? 1 : 0
+              params.typeId = this.ruleForm.typeId
+              if (!this.cover) {
+                this.$message.error('请上传商品封面图片')
+                return
+              }
+              if (!this.image1) {
+                this.$message.error('请上传商品详情图片1')
+                return
+              }
+              if (!this.image2) {
+                this.$message.error('请上传商品详情图片2')
+                return
+              }
+              if (this.actionType == 'add') {
+                delete params.id
+                addGoods(params).then(res => {
+                  if (res.code === 0) {
+                    this.$message.success('商品添加成功！')
+                    if (!st) {
+                      this.goBack()
+                    } else {
+                      this.cover = ''
+                      this.image1 = ''
+                      this.image2 = ''
+                      this.ruleForm = {
+                        'name': '',
+                        'id': '',
+                        'price': '',
+                        'intro': '',
+                        'cover': '',
+                        'image1': '',
+                        'image2': '',
+                        'price': '',
+                        'stock': '',
+                        'typeId': ''
+                      }
+                    }
+                  } else {
+                    this.$message.error(res.msg || '操作失败')
+                  }
+                }).catch(err => {
+                  this.$message.error('请求出错了：' + err)
+                })
+              } else {
+                updateGoods(params).then(res => {
+                  if (res.code === 0) {
+                    this.$message.success('商品修改成功！')
+                    this.goBack()
+                  } else {
+                    this.$message.error(res.msg || '操作失败')
+                  }
+                }).catch(err => {
+                  this.$message.error('请求出错了：' + err)
+                })
+              }
+            } else {
+              return false
+            }
+          })
+        },
+
+        handleAvatarSuccess1 (response, file, fileList) {
+          // 拼接down接口预览
+          if (response.code === 0 && response.msg === '未登录') {
+            window.top.location.href = '/backend/page/login/login.html'
+          } else {
+            this.cover = `/common/download?name=${response.msg}`
+            this.ruleForm.cover = response.msg
+          }
+        },
+        handleAvatarSuccess2 (response, file, fileList) {
+          // 拼接down接口预览
+          if (response.code === 0 && response.msg === '未登录') {
+            window.top.location.href = '/backend/page/login/login.html'
+          } else {
+            this.image1 = `/common/download?name=${response.msg}`
+            this.ruleForm.image1 = response.msg
+          }
+        },
+        handleAvatarSuccess3 (response, file, fileList) {
+          // 拼接down接口预览
+          if (response.code === 0 && response.msg === '未登录') {
+            window.top.location.href = '/backend/page/login/login.html'
+          } else {
+            this.image2 = `/common/download?name=${response.msg}`
+            this.ruleForm.image2 = response.msg
+          }
+        },
+
+        onChange (file) {
+          if (file) {
+            const suffix = file.name.split('.')[1]
+            const size = file.size / 1024 / 1024 < 2
+            if (['png', 'jpeg', 'jpg'].indexOf(suffix) < 0) {
+              this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
+              this.$refs.upload.clearFiles()
+              return false
+            }
+            if (!size) {
+              this.$message.error('上传文件大小不能超过 2MB!')
+              return false
+            }
+            return file
+          }
+        },
+
+        goBack () {
+          window.parent.menuHandle({
+            id: '4',
+            url: '/backend/page/goods/list.html',
+            name: '商品管理'
+          }, false)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

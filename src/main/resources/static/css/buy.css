@@ -1,0 +1,102 @@
+.container{
+    width: 1170px;
+    margin: 0px auto;
+    position: relative;
+    padding: 100px 0px;
+}
+
+.container .alert{
+    position: absolute;
+    top: 30px;
+    width: 100%;
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.container .form{
+    width: 900px;
+    margin: 0px auto;
+}
+
+.container .form #user_information{
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.168) ;
+}
+
+.container .form .item{
+    padding: 5px;
+}
+
+.container .form .item .label{
+    font-size: 13px;
+    line-height: 30px;
+    color: #666;
+    margin-bottom: 0px;
+    display: inline-block;
+    width: 70px;
+}
+.container .form .item input{
+    width: 50%;
+    height: 28px;
+    outline: none;
+    display: inline-block;
+}
+.container .form .btn{
+    width:80px;
+    height: 35px;
+    background-color: #fd7d23;
+    color: #fff;
+    font-size: 13px;
+
+    margin: 20px auto;
+    line-height: 35px;
+    text-align: center;
+
+    padding: 0px;
+    display: block;
+}
+.container .form .forget{
+    text-align: center;
+    line-height: 25px;
+    margin-top: 10px;
+}
+
+#phone_and_code{
+    display: none;
+}
+
+#safety_information{
+    padding-top: 50px;
+}
+.pay{
+    display: flex;
+    flex-wrap: wrap;
+}
+.pay .pic{
+    width: 180px;
+    padding: 15px;
+    border: 1px solid transparent;
+}
+.pay .active{
+    border: 1px solid #fd7d23;
+}
+img{
+    width: 100%;
+}
+.num{
+    display: inline-block;
+    padding-right: 20px;
+}
+.btns{
+    margin-top: 15px;
+    text-align: right;
+}
+.submit{
+    background-color: #6ed35a;
+    font-size: .8rem;
+    color: #fff;
+    margin-right: 100px;
+    border: 1px solid #6ed35a;
+    padding: 10px 20px;
+    border-radius: 4px;
+}

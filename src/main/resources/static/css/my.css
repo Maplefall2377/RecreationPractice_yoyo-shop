@@ -1,0 +1,126 @@
+.register {
+    padding: 6em 0;
+    width: 100%;
+    margin: 0 auto;
+}
+.my{
+    width: 60%;
+    margin: 0 auto;
+}
+.register-top-grid h3, .register-bottom-grid h3 {
+    color: #F07818;
+    font-size: 3em;
+    padding-bottom: 1em;
+    margin: 0;
+    text-align: center;
+    font-family: 'Marvel-Regular';
+}
+.register-top-grid .input, .register-bottom-grid .input {
+    margin: 10px 0;
+}
+.register-top-grid span, .register-bottom-grid span {
+    color:#999;
+    font-size: 0.85em;
+    padding-bottom: 0.2em;
+    display: block;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.register-top-grid input[type="text"], .register-bottom-grid input[type="password"] {
+    border: 1px solid #555;
+    outline-color:#FD9F3E;
+    width: 96%;
+    font-size: 1em;
+    padding: 0.5em;
+}
+.checkbox {
+    margin-bottom: 4px;
+    padding-left: 27px;
+    font-size: 1.1em;
+    line-height: 27px;
+    cursor: pointer;
+}
+.checkbox {
+    float: left;
+    position: relative;
+    font-size: 0.85em;
+    color:#555;
+}
+.checkbox:last-child {
+    margin-bottom: 0;
+}
+.news-letter {
+    color: #555;
+    font-weight:600;
+    font-size: 0.85em;
+    margin-bottom: 1em;
+    display: block;
+    text-transform: uppercase;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    clear: both;
+}
+.checkbox i {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    display: block;
+    width:20px;
+    height:20px;
+    outline: none;
+    border: 2px solid #394c53;
+}
+.checkbox input + i:after {
+    content: '';
+    background: url("../images/tick1.png") no-repeat 1px 2px;
+    top: -1px;
+    left: -1px;
+    width: 15px;
+    height: 15px;
+    font: normal 12px/16px FontAwesome;
+    text-align: center;
+}
+.checkbox input + i:after {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.1s;
+    -o-transition: opacity 0.1s;
+    -ms-transition: opacity 0.1s;
+    -moz-transition: opacity 0.1s;
+    -webkit-transition: opacity 0.1s;
+}
+.checkbox input {
+    position: absolute;
+    left: -9999px;
+}
+.checkbox input:checked + i:after {
+    opacity: 1;
+}
+.news-letter:hover {
+    color:#00BFF0;
+}
+.register-but{
+    margin-top:1em;
+}
+.register-but input[type="submit"] {
+    border: 2px solid #F07818;
+    color: #FFF;
+    font-size: 1.1em;
+    padding: 0.5em 2em;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    display: inline-block;
+    outline: none;
+    background-color: #F07818;
+}
+.register-but input[type="submit"]:hover {
+    background: #FFF;
+    color: #F07818;
+}
+.register-bottom-grid {
+    margin-top:4em;
+}

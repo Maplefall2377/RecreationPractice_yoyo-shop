@@ -1,0 +1,214 @@
+body{
+    font: 14px Helvetica Neue, Helvetica, PingFang SC, Tahoma, Arial, sans-serif;
+}
+/* 控制所有a标签做动画 */
+body a, body h2{
+    transition: .9s all ease;
+    -webkit-transition: .5s all ease;
+
+}
+a{
+    color: #3E4651;
+}
+header{
+    background-color: #3E4651;
+    display: flex;
+    /*设置弹性子元素在主轴上的对齐方式 center*/
+    justify-content: center;
+}
+header .body{
+    width: 1170px;
+    /*margin-left: calc((100% - 1170px) / 2);*/
+    /*margin: 0px auto;*/
+
+    display: flex;
+    justify-content: space-between;
+}
+header .body .left{
+    /*放大*/
+    flex-grow: 1;
+
+    /* 弹性容器 */
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+header .body .left h1{
+    /* 加粗：100-900， 600往后加粗 */
+    font-weight: 400;
+    font-size: 1em;
+    /* 不缩小 */
+    flex-shrink: 0;
+    margin-bottom:0px
+}
+/* 后代选择器 */
+header .body .left h1 a{
+    font-size: 3em;
+    color: #fff;
+    /* 使用自定义字体 */
+    font-family: 'Marvel-Regular';
+    text-decoration: none;
+}
+header .body .left>ul{
+    /* 放大 */
+    flex-grow: 1;
+
+    display: flex;
+    margin-left: 2.5em;
+    margin-bottom: 0px;
+}
+/* 选中状态 */
+header .body .left>ul>.active{
+    background-color: #81b29A;
+}
+header .body .left>ul>li:hover{
+    background-color: #81b29A;
+}
+/* nth-child(2) 获取ul中的第二个元素 */
+/* nth-child(4n + 2) 4n：4列  +2：第二列 */
+header .body .left>ul>li:nth-child(2) {
+    /* 相对定位 */
+    position: relative;
+
+}
+/* 商品分类下拉 */
+.drop-select{
+    /* 绝对定位 */
+    position: absolute;
+    /* 参考已经定位的父级元素宽度计算当前元素宽度 */
+    width: 185%;
+    /* background-color: pink; */
+
+    padding: 5px 10px;
+    box-sizing: border-box;
+
+    background-color: #fff;
+    border: 1px solid #ddd;
+    /* 设置透明 */
+    border-top: transparent;
+
+    /* 阴影     水平 垂直 阴影的范围 重阴影的范围 阴影的颜色 */
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .2);
+    /* 隐藏元素 */
+    display: none;
+
+}
+.drop-select .head{
+    color: #F07818;
+    font-size: 1.12em;
+    line-height: 1.8em;
+    border-bottom: 1px solid #ddd;
+}
+.drop-select ul li{
+    font-size: 1em;
+    line-height: 1.8em;
+}
+header .body .left>ul>li>a{
+    font-size: 1.1em;
+    padding:  1.5em 1.18em;
+    color: #fff;
+    text-decoration: none;
+}
+
+header .body .right{
+    /*不缩小*/
+    flex-shrink: 0;
+    width: 18%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+header .body .right a{
+    color: #fff;
+    width: 4.7em;
+    height: 100%;
+    text-align: center;
+    /*把当前标签转换为块标签*/
+    /*display: block;*/
+    /*display: flex;*/
+    /*单行垂直居中*/
+    /*align-items: center;*/
+    position: relative;
+}
+header .body .right a i{
+    font-size: 2em;
+    font-weight: 600;
+    /*flex-grow: 1;*/
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    top: 50%;
+}
+header .body .right a .up-arrow{
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border-top: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    /*隐藏*/
+    opacity: 0;
+}
+header .body .right a .search{
+    /*隐藏*/
+    opacity: 0;
+
+    position: absolute;
+    top: 4.75em;
+    left: -12em;
+    width: 15em;
+    height: 4.5em;
+    background-color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header .body .right a .search input{
+    width: 8em;
+    border: 1px salmon solid;
+    border-right: none;
+    height: 2.5em;
+    box-sizing: border-box;
+    outline: none;
+}
+header .body .right a .search button{
+    width: 4em;
+    background-color: salmon;
+    height: 2.5em;
+    color: #fff;
+    border-color: salmon;
+    box-shadow: none;
+    /*当点击时添加的外边框*/
+    outline: none;
+}
+header .body .right a:hover .up-arrow,header .body .right a:hover .search{
+    opacity: 1;
+}
+footer{
+    height: 8em;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carts .num{
+    position: absolute;
+    top: 24px;
+    right: -4px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    /* background-color: #F07818; */
+    color: #F07818;
+    font-size: 1.5em;
+}
