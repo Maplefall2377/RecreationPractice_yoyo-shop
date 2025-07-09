@@ -11,4 +11,53 @@
             </if>
         </where>
     </select>
+
+    <!--检测用户名是否存在-->
+    <select id="checkExistsUserName" resultType="integer">
+        select count(1) from user where username=#{username}
+    </select>
+
+    <!--检测手机号是否存在-->
+    <select id="checkExistsPhone" resultType="integer">
+        select count(1) from user where phone=#{phone}
+    </select>
+
+    <!--添加用户-->
+    <insert id="addUser">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+        </trim>
+    </insert>
 </mapper>

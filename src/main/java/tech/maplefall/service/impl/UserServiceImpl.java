@@ -18,4 +18,20 @@ public class UserServiceImpl implements IUserService {
     public List<User> lists(String name) {
         return userMapper.lists(name);
     }
+
+    @Override
+    public boolean checkExistsUserName(String username) {
+        return userMapper.checkExistsUserName(username)>0? true:false;
+    }
+
+    @Override
+    public boolean checkExistsPhone(String phone) {
+        return userMapper.checkExistsPhone(phone)>0?true:false;
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        return userMapper.addUser(user)>0?true:false;
+    }
+
 }

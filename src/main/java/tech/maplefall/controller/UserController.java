@@ -4,12 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.maplefall.entity.User;
 import tech.maplefall.service.IUserService;
 import tech.maplefall.util.Result;
+import tech.maplefall.util.SafeUtils;
 
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    //查询用户是否存在
     @GetMapping("/lists")
     private Result lists(Integer page, Integer pageSize, String name) {
         if (page == null) {
@@ -35,5 +35,25 @@ public class UserController {
         PageInfo<User> pageInfo = new PageInfo<>(userList);
 
         return Result.success(pageInfo);
+    }
+
+    //添加
+    @PostMapping("/adduser")
+    public Result addUser(@RequestBody User user){
+        //判断账号是否存在,
+        boolean flag1 = userService.checkExistsUserName(user.getUsername());
+        if (flag1){
+            return Result.error("用户名已存在");
+        }
+        // 判断手机号是否存在
+        boolean flag2 = userService.checkExistsPhone(user.getPhone());
+        if (flag2){
+            return Result.error("手机号已被注册");
+        }
+        // 注册
+        String pwd = SafeUtils.encode(user.getPassword());//加密
+        user.setPassword(pwd);
+        boolean flag3 = userService.addUser(user);
+        return flag3?Result.success("注册成功"):Result.error("注册失败");
     }
 }

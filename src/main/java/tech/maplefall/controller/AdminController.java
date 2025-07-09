@@ -19,6 +19,7 @@ public class AdminController {
     @Autowired
     private IAdminService adminService;
 
+    //管理员登录
     @PostMapping("/login")
     public Result login(@RequestBody Admin admin){
         if ("".equals(admin.getPassword())){
