@@ -72,4 +72,4 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 upload:
-  path: D:\RecreationPractice\upload\yoyo # 上传文件存储路径
+  path: D:\RecreationPractice\upload\yoyo\ # 上传文件存储路径

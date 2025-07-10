@@ -62,7 +62,7 @@
     </insert>
 
     <!--根据ID查询顾客-->
-    <select id = "getUserById">
+    <select id = "getUserById" resultType="tech.maplefall.entity.User"><!--老师没加结果类型-->
         select * from user where id = #{id}
     </select>
 

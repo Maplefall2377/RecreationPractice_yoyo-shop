@@ -8,7 +8,7 @@ import tech.maplefall.service.IAdminService;
 
 
 @Service
-public class IAdminServiceImpl implements IAdminService {
+public class AdminServiceImpl implements IAdminService {
 
     @Autowired
     private AdminMapper adminMapper;
