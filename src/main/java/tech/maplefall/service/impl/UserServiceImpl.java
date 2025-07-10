@@ -34,4 +34,14 @@ public class UserServiceImpl implements IUserService {
         return userMapper.addUser(user)>0?true:false;
     }
 
+    @Override
+    public User getUserById(Integer id) {
+        return userMapper.getUserById(id);
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        return userMapper.updateUser(user) > 0 ? true : false;
+    }
+
 }

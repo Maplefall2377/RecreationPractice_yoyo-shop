@@ -40,7 +40,7 @@ public class UserController {
     //添加
     @PostMapping("/adduser")
     public Result addUser(@RequestBody User user){
-        //判断账号是否存在,
+        //判断账号是否存在
         boolean flag1 = userService.checkExistsUserName(user.getUsername());
         if (flag1){
             return Result.error("用户名已存在");
@@ -55,5 +55,22 @@ public class UserController {
         user.setPassword(pwd);
         boolean flag3 = userService.addUser(user);
         return flag3?Result.success("注册成功"):Result.error("注册失败");
+    }
+
+    //根据ID查询顾客信息
+    @GetMapping("/getuserbyid/{id}")
+    public Result getUserById(@PathVariable Integer id) {
+        User user = userService.getUserById(id);
+        return user != null ? Result.success(user) : Result.error("查询失败");
+    }
+
+    //修改顾客：修改单个或全部
+    @PutMapping("/updateUser")
+    public Result updateUser(@RequestBody User user){
+//        //密码加密（老师没加）
+//        String pwd = SafeUtils.encode(user.getPassword());//加密密码
+//        user.setPassword(pwd);
+        boolean flag = userService.updateUser(user);
+        return flag ? Result.success("修改成功") : Result.error("修改失败");
     }
 }
