@@ -73,4 +73,18 @@ public class UserController {
         boolean flag = userService.updateUser(user);
         return flag ? Result.success("修改成功") : Result.error("修改失败");
     }
+
+    //账号禁用启用
+    @PutMapping("/updateUserStatus")
+    public Result updateUserStatus(@RequestBody User user){
+        boolean flag = userService.updateUser(user);
+        return flag ? Result.success("修改成功") : Result.error("修改失败");
+    }
+
+    //删除顾客
+    @DeleteMapping("/delUser")
+    public Result delUser(Integer id) {
+        boolean flag = userService.delUser(id);
+        return flag ? Result.success("删除成功") : Result.error("删除失败");
+    }
 }

@@ -21,17 +21,17 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean checkExistsUserName(String username) {
-        return userMapper.checkExistsUserName(username)>0? true:false;
+        return userMapper.checkExistsUserName(username)>0? true : false;
     }
 
     @Override
     public boolean checkExistsPhone(String phone) {
-        return userMapper.checkExistsPhone(phone)>0?true:false;
+        return userMapper.checkExistsPhone(phone) > 0 ? true : false;
     }
 
     @Override
     public boolean addUser(User user) {
-        return userMapper.addUser(user)>0?true:false;
+        return userMapper.addUser(user) > 0 ? true : false;
     }
 
     @Override
@@ -42,6 +42,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean updateUser(User user) {
         return userMapper.updateUser(user) > 0 ? true : false;
+    }
+
+    @Override
+    public boolean delUser(Integer id) {
+        return userMapper.delUser(id) > 0 ? true : false;
     }
 
 }

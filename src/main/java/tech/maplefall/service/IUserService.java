@@ -11,4 +11,5 @@ public interface IUserService {
     boolean addUser(User user);//添加顾客
     User getUserById(Integer id);//根据ID查询顾客
     boolean updateUser(User user);//修改用户信息
+    boolean delUser(Integer id);//删除用户
 }

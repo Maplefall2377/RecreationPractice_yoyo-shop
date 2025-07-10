@@ -13,4 +13,5 @@ public interface UserMapper {
     int addUser(User user);//添加
     User getUserById(Integer id);//根据ID查询顾客
     int updateUser(User user);//修改用户信息
+    int delUser(Integer id);//删除用户
 }
