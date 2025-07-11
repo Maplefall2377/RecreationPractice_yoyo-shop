@@ -8,4 +8,5 @@ import java.util.List;
 public interface GoodsMapper {
     List<GoodsDTO> lists(String name, Integer typeId, Integer types);//查询所有商品和对应的榜单top表
     int updateGoods(Goods goods);//更新商品信息
+    int saveGoods(Goods goods);//添加商品
 }

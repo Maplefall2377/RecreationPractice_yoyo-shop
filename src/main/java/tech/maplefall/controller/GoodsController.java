@@ -43,4 +43,11 @@ public class GoodsController {
         boolean flag = goodsService.updateGoods(goods);
         return flag ? Result.success("修改成功") : Result.error("修改失败");
     }
+
+    //添加商品
+    @PostMapping("/saveGoods")
+    public Result saveGoods(@RequestBody Goods goods) {
+        boolean flag = goodsService.saveGoods(goods);
+        return flag ? Result.success("商品添加成功") : Result.error("商品添加失败");
+    }
 }

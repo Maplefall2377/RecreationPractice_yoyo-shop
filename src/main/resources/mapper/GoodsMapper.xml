@@ -5,7 +5,7 @@
 
     <!--查询所有商品和对应的榜单top表-->
     <select id="lists" resultType="GoodsDTO">
-        select g.* ,t.id 'tid',t.type 'types' from goods g join top t
+        select g.* ,t.id 'tid',t.type 'types' from goods g  left outer join top t
         on g.id = t.goods_id
         <where>
             <if test="name != null">
@@ -55,4 +55,67 @@
         </set>
         where id = #{id}
     </update>
+
+    <!--添加商品-->
+    <insert id = "saveGoods" parameterType="Goods" useGeneratedKeys="true" keyProperty="id">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="intro != null">
+                intro,
+            </if>
+            <if test="cover != null">
+                cover,
+            </if>
+            <if test="image1 != null">
+                image1,
+            </if>
+            <if test="image2 != null">
+                image2,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="intro != null">
+                #{intro},
+            </if>
+            <if test="cover != null">
+                #{cover},
+            </if>
+            <if test="image1 != null">
+                #{image1},
+            </if>
+            <if test="image2 != null">
+                #{image2},
+            </if>
+            <if test="stock != null">
+                #{stock},
+            </if>
+            <if test="typeId != null">
+                #{typeId},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+        </trim>
+    </insert>
 </mapper>
