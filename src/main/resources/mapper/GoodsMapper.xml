@@ -20,4 +20,39 @@
         </where>
         order by g.id desc
     </select>
+
+    <!--更新商品信息-->
+    <update id = "updateGoods">
+        update goods
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="intro != null">
+                intro = #{intro},
+            </if>
+            <if test="cover != null">
+                cover = #{cover},
+            </if>
+            <if test="image1 != null">
+                image1 = #{image1},
+            </if>
+            <if test="image2 != null">
+                image2 = #{image2},
+            </if>
+            <if test="stock != null">
+                stock = #{stock},
+            </if>
+            <if test = "typeId != null">
+                type_id = #{typeId},
+            </if>
+            <if test = "status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
