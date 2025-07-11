@@ -3,13 +3,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tech.maplefall.mapper.GoodsMapper">
 
+    <!--查询所有商品和对应的榜单top表-->
     <select id="lists" resultType="GoodsDTO">
-        select g.* ,t.id 'tid',t.type from goods g join top t
-        on g.id =t.goods_id
+        select g.* ,t.id 'tid',t.type 'types' from goods g join top t
+        on g.id = t.goods_id
         <where>
             <if test="name != null">
-                name like concat('%', #{name}, '%')
+                and g.name like concat('%', #{name}, '%')
+            </if>
+            <if test="typeId != null">
+                and g.type_id = #{typeId}
+            </if>
+            <if test="types != null">
+                and t.type = #{types}
             </if>
         </where>
+        order by g.id desc
     </select>
 </mapper>

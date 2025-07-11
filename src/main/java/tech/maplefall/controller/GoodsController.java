@@ -23,7 +23,7 @@ public class GoodsController {
 
     //查询商品列表
     @GetMapping("/lists")
-    private Result lists(Integer page, Integer pageSize, String name) {
+    private Result lists(Integer page, Integer pageSize, String name, Integer typeId, Integer type) {
         if (page == null) {
             page = 1;
         }
@@ -32,8 +32,8 @@ public class GoodsController {
         }
 
         PageHelper.startPage(page, pageSize);
-        List<GoodsDTO> userList = goodsService.lists(name);
-        PageInfo<GoodsDTO> pageInfo = new PageInfo<>(userList);
+        List<GoodsDTO> goodsDTOList = goodsService.lists(name, typeId, type);
+        PageInfo<GoodsDTO> pageInfo = new PageInfo<>(goodsDTOList);
 
         return Result.success(pageInfo);
     }

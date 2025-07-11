@@ -14,7 +14,7 @@ public class GoodsServiceImpl implements IGoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
     @Override
-    public List<GoodsDTO> lists(String name) {
-        return goodsMapper.lists(name);
+    public List<GoodsDTO> lists(String name, Integer typeId, Integer type) {
+        return goodsMapper.lists(name, typeId, type);
     }
 }
