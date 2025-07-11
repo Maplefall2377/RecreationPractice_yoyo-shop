@@ -118,9 +118,4 @@
             </if>
         </trim>
     </insert>
-
-    <!--删除商品-->
-    <delete id="delGoods">
-        delete from goods where id = #{id}
-    </delete>
 </mapper>

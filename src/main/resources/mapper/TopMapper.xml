@@ -7,9 +7,4 @@
     <insert id="saveTop" parameterType="Top">
         insert into top(type, goods_id) values(#{type}, #{goodsId})
     </insert>
-
-<!--    &lt;!&ndash;删除&ndash;&gt;-->
-<!--    <delete id="delTopByGoodsId" parameterType="int">-->
-<!--        delete from top where goods_id = #{goodsId}-->
-<!--    </delete>-->
 </mapper>

@@ -10,5 +10,4 @@ public interface IGoodsService {
     List<GoodsDTO> lists(String name, Integer typeId, Integer type);//查询所有商品和对应的榜单top表
     boolean updateGoods(Goods goods);//更新商品信息
     boolean saveGoods(Goods goods);//添加商品
-    boolean delGoods(Integer id);//删除商品
 }
