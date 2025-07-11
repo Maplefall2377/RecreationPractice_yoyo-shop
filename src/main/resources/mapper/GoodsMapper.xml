@@ -5,7 +5,7 @@
 
     <!--查询所有商品和对应的榜单top表-->
     <select id="lists" resultType="GoodsDTO">
-        select g.* ,t.id 'tid',t.type 'types' from goods g  left outer join top t
+        select g.* ,t.id 'tid',t.type 'types' from goods g left outer join top t
         on g.id = t.goods_id
         <where>
             <if test="name != null">
@@ -118,4 +118,9 @@
             </if>
         </trim>
     </insert>
+
+    <!--删除商品-->
+    <delete id="delGoods">
+        delete from goods where id = #{id}
+    </delete>
 </mapper>

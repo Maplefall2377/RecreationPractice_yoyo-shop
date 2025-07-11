@@ -50,4 +50,11 @@ public class GoodsController {
         boolean flag = goodsService.saveGoods(goods);
         return flag ? Result.success("商品添加成功") : Result.error("商品添加失败");
     }
+
+    //删除商品
+    @DeleteMapping("/delGoods/{id}")
+    public Result delGoods(@PathVariable Integer id) {
+        boolean flag = goodsService.delGoods(id);
+        return flag ? Result.success("商品删除成功") : Result.error("商品删除失败");
+    }
 }
