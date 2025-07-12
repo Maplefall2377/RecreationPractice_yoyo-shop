@@ -46,4 +46,10 @@ public class GoodsServiceImpl implements IGoodsService {
     public Goods goodsDetails(Integer id) {
         return goodsMapper.getGoodsById(id);
     }
+
+    @Override
+    public boolean delGoods(Integer id) {
+        //删除goods表内的记录的同时，根据id删除top表内对应的记录
+        return goodsMapper.delGoods(id) > 0 ? true : false;
+    }
 }

@@ -58,4 +58,9 @@ public class GoodsController {
         return goods != null ? Result.success(goods) : Result.error("查询失败");
     }
 
+    //删除商品
+    @DeleteMapping("/delGoods/{id}")
+    public Result delGoods(@PathVariable("id") Integer id) {
+        return goodsService.delGoods(id) ? Result.success("商品删除成功") : Result.error("商品删除失败");
+    }
 }

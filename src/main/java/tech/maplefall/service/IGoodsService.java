@@ -11,4 +11,5 @@ public interface IGoodsService {
     boolean updateGoods(Goods goods);//更新商品信息
     boolean saveGoods(Goods goods);//添加商品
     Goods goodsDetails(Integer id);//根据ID查询商品详情
+    boolean delGoods(Integer id);//删除商品
 }
