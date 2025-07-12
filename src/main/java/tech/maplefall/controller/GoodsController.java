@@ -50,4 +50,12 @@ public class GoodsController {
         boolean flag = goodsService.saveGoods(goods);
         return flag ? Result.success("商品添加成功") : Result.error("商品添加失败");
     }
+
+    //根据Id查询商品详情
+    @GetMapping("/detail/{id}")
+    public Result details(@PathVariable Integer id){
+        Goods goods = goodsService.goodsDetails(id);
+        return goods != null ? Result.success(goods) : Result.error("查询失败");
+    }
+
 }

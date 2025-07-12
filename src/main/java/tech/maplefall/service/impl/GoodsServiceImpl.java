@@ -41,4 +41,9 @@ public class GoodsServiceImpl implements IGoodsService {
         int rows = topMapper.saveTop(top);
         return rows > 0 ? true : false;
     }
+
+    @Override
+    public Goods goodsDetails(Integer id) {
+        return goodsMapper.getGoodsById(id);
+    }
 }

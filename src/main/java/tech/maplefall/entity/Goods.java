@@ -14,4 +14,7 @@ public class Goods {
     private Integer stock;// 商品库存
     private Integer typeId;// 商品类型ID
     private Integer status;// 商品状态（0：禁用，1：启用）
+
+    // 一对一
+    private Type type;//商品类型
 }

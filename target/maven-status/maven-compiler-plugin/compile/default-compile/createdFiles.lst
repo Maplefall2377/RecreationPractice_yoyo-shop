@@ -1,3 +1,4 @@
+tech\maplefall\entity\Top.class
 tech\maplefall\mapper\TypeMapper.class
 tech\maplefall\service\impl\UserServiceImpl.class
 tech\maplefall\service\impl\GoodsServiceImpl.class
@@ -9,6 +10,7 @@ tech\maplefall\entity\Admin.class
 tech\maplefall\mapper\GoodsMapper.class
 tech\maplefall\service\IGoodsService.class
 tech\maplefall\mapper\AdminMapper.class
+tech\maplefall\mapper\TopMapper.class
 tech\maplefall\util\SafeUtils.class
 tech\maplefall\controller\GoodsController.class
 tech\maplefall\controller\TypeController.class

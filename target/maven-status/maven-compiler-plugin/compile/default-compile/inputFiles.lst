@@ -4,6 +4,8 @@ D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\service\IG
 D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\entity\Type.java
 D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\mapper\UserMapper.java
 D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\util\RedisUtils.java
+D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\mapper\TopMapper.java
+D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\entity\Top.java
 D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\service\IAdminService.java
 D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\mapper\GoodsMapper.java
 D:\RecreationPractice\Projects\yoyo-shop\src\main\java\tech\maplefall\mapper\AdminMapper.java
