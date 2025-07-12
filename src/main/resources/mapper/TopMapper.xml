@@ -7,4 +7,10 @@
     <insert id="saveTop" parameterType="Top">
         insert into top(type, goods_id) values(#{type}, #{goodsId})
     </insert>
+
+    <!--根据id修改榜单类型-->
+    <update id="updateTopType">
+        update top set type = #{type} where id = #{id}
+    </update>
+
 </mapper>

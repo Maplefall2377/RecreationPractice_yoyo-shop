@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tech.maplefall.entity.Goods;
+import tech.maplefall.entity.Top;
 import tech.maplefall.entity.dto.GoodsDTO;
 import tech.maplefall.service.IGoodsService;
 import tech.maplefall.util.Result;
@@ -63,4 +64,11 @@ public class GoodsController {
     public Result delGoods(@PathVariable("id") Integer id) {
         return goodsService.delGoods(id) ? Result.success("商品删除成功") : Result.error("商品删除失败");
     }
+
+    //根据ID修改商品榜单类型
+    @PutMapping("/updateTopType")
+    public Result updateTopType(@RequestBody Top top){
+        return goodsService.updateGoodsType(top.getId(), top.getType()) ? Result.success("商品榜单类型修改成功") : Result.error("商品榜单类型修改失败");
+    }
+
 }
