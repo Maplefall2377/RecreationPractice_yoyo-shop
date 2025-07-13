@@ -18,6 +18,11 @@
             select * from type where id = #{id}
         </select>
 
+<!--根据分类ID查询分类下商品数量，常用于删除前判断是否有商品使用该分类-->
+    <select id="getTypeCountById" parameterType="int" resultType="int">
+        select count(*) from goods where type_id = #{id}
+    </select>
+
 <!--    更新分类信息，已包含更新状态-->
         <update id = "updateType">
             update type

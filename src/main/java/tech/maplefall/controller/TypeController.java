@@ -56,6 +56,11 @@ public class TypeController {
     //删除分类，根据ID删除分类
     @DeleteMapping("/delType/{id}")
     public Result delType(@PathVariable("id") Integer id) {
+        // 在删除前检查该分类下是否有商品
+        int count = typeService.getTypeCountById(id);
+        if (count > 0) {
+            return Result.error("该分类下有商品，无法删除");
+        }
         boolean flag = typeService.delType(id);
         return flag ? Result.success("删除成功") : Result.error("删除失败");
     }

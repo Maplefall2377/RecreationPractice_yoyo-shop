@@ -30,6 +30,10 @@ public class TypeServiceImpl implements ITypeService {
     }
 
     @Override
+    public int getTypeCountById(Integer id) {
+        return typeMapper.getTypeCountById(id);
+    }
+    @Override
     public boolean updateType(Type type) {
         return typeMapper.updateType(type) > 0 ? true : false;
     }
