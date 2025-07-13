@@ -17,4 +17,9 @@ public class OrderServiceImpl implements IOrderService {
     public List<Order> lists(String orderNumber, Integer status, Integer paytype) {
         return orderMapper.lists(orderNumber, status, paytype);
     }
+
+    @Override
+    public boolean updateStatus(Order order) {
+        return orderMapper.updateStatus(order) > 0 ? true : false;
+    }
 }

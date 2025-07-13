@@ -4,9 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.maplefall.entity.Order;
 import tech.maplefall.service.IOrderService;
 import tech.maplefall.util.Result;
@@ -35,5 +33,13 @@ public class OrderController {
         PageInfo<Order> pageInfo = new PageInfo<>(orderList);
 
         return Result.success(pageInfo);
+    }
+
+    @PutMapping("/updateStatus/{id}/{status}")
+    public Result updateStatus(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
+        Order order = new Order();
+        order.setId(id);
+        order.setStatus(status);
+        return orderService.updateStatus(order) ? Result.success("修改成功") : Result.error("修改失败失败");
     }
 }

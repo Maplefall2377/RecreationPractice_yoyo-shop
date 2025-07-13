@@ -46,4 +46,24 @@
             <result column="order_id" property="orderId"/>
         </collection>
     </resultMap>
+
+    <!--修改订单状态-->
+    <update id="updateStatus">
+        update `order`
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
