@@ -175,9 +175,9 @@
           statusList: [
             { id: 1, name: '待支付' },
             { id: 2, name: '已付款' },
-            { id: 3, name: '已付款' },
-            { id: 4, name: '配送中' },
-            { id: 5, name: '已完成' },
+            { id: 3, name: '配送中' },
+            { id: 4, name: '已完成' },
+            { id: 5, name: '已取消' },
           ]
         }
       },
@@ -223,7 +223,7 @@
           return `/common/download?name=${image}`
         },
         changeStatus (val) {
-          this.status = val; //订单状态 0表示删除，1表示未付款，2表示已付款，3表示配送中，4表示已完成
+          this.status = val; //订单状态 1表示待支付，2表示已付款，3表示配送中，4表示已完成，5表示已取消，
           this.page = 1;
           this.init();
         },
@@ -252,13 +252,16 @@
             case 4:
               str = '已完成'
               break;
+            case 5:
+              str = '已取消'
+              break;
           }
           return str
         },
         //订单支付方式
         getOrderPayType (row) {
           let str = ''
-          switch (row.status) {
+          switch (row.paytype) {
             case 1:
               str = '微信支付'
               break;
