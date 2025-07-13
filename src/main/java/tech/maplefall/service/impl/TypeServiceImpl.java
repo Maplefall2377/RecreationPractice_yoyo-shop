@@ -18,4 +18,29 @@ public class TypeServiceImpl implements ITypeService {
     public List<Type> lists() {
         return typeMapper.lists();
     }
+
+    @Override
+    public List<Type> listall() {
+        return typeMapper.listall();
+    }
+
+    @Override
+    public Type getTypeById(Integer id) {
+        return typeMapper.getTypeById(id);
+    }
+
+    @Override
+    public boolean updateType(Type type) {
+        return typeMapper.updateType(type) > 0 ? true : false;
+    }
+
+    @Override
+    public boolean addType(Type type) {
+        return typeMapper.addType(type) > 0 ? true : false;
+    }
+
+    @Override
+    public boolean delType(Integer id) {
+        return typeMapper.delType(id) > 0 ? true : false;
+    }
 }

@@ -3,7 +3,53 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tech.maplefall.mapper.TypeMapper">
 
+<!--    显示已启用商品分类，常在小列表中展示商品分类-->
     <select id="lists" resultType="Type">
         select * from type where status = 1
     </select>
+
+<!--    查询所有商品分类（无论是否启用）-->
+    <select id = "listall" resultType="Type">
+        select * from type
+    </select>
+
+<!--    根据分类ID查询类型详情，常用于修改-->
+        <select id="getTypeById" parameterType="int" resultType="Type">
+            select * from type where id = #{id}
+        </select>
+
+<!--    更新分类信息，已包含更新状态-->
+        <update id = "updateType">
+            update type
+            <set>
+                <if test="name != null">
+                    name = #{name},
+                </if>
+                <if test="status != null">
+                    status = #{status},
+                </if>
+            </set>
+            where id = #{id}
+        </update>
+
+<!--    添加分类-->
+        <insert id="addType">
+            insert into type
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                <if test="name != null">
+                    name,
+                </if>
+            </trim>
+            <trim prefix="values(" suffix=")" suffixOverrides=",">
+                <if test="name != null">
+                    #{name},
+                </if>
+            </trim>
+        </insert>
+
+<!--    删除分类-->
+        <delete id="delType">
+            delete from type where id = #{id}
+        </delete>
 </mapper>
