@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tech.maplefall.util.Result;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,7 +22,12 @@ public class CommonController {
     private String uploadPath;
 
     @PostMapping("/upload")
-    public Result upload(@RequestParam("file") MultipartFile multipartFile){
+    public Result upload(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) {
+        // 未登录管理员无法进行以下操作
+        String tokenAdmin = request.getHeader("token-admin");
+        if (tokenAdmin == null || "".equals(tokenAdmin)) {
+            return Result.error("NOTLOGIN");
+        }
 
         String name = UUID.randomUUID().toString() + "-" +multipartFile.getOriginalFilename();
         try {

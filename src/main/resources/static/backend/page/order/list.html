@@ -124,7 +124,7 @@
             <el-image style="width: auto; height: 60px; border:none;cursor: pointer;" :src="getImage(row.pic)"
               :preview-src-list="[ `/common/download?name=${row.pic}` ]">
               <div slot="error" class="image-slot">
-                <img src="./../../images/noImg.png" style="width: auto; height: 40px; border:none;">
+                <img src="./../../images/noImg.png" style="width: 70px; height: 70px; border:none;">
               </div>
             </el-image>
           </template>
@@ -288,7 +288,6 @@
             'cancelButtonText': '取消',
             'type': 'warning'
           }).then(() => {
-
             updateStatus(id, status).then(res => {
               if (res.code === 0) {
                 this.$message.success(status === 3 ? '订单已派送' : '订单已完成')

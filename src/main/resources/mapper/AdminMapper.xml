@@ -3,7 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tech.maplefall.mapper.AdminMapper">
 
-    <select id="getAdminByUsername" resultType="tech.maplefall.entity.Admin">
+    <!--根据用户名获得Admin对象-->
+    <select id="getAdminByUsername" resultType="Admin">
         select * from admin where username=#{username}
     </select>
+
+    <!--根据id获得Admin对象-->
+    <select id="getAdminById" resultType="Admin">
+        select * from admin where id=#{id}
+    </select>
+
+    <!--更新管理员密码-->
+    <update id="updateAdminPassword">
+        update admin set password=#{password} where id=#{id}
+    </update>
 </mapper>

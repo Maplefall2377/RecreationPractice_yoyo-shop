@@ -76,7 +76,7 @@
             <el-image style="width: auto; height: 40px; border:none;cursor: pointer;" :src="getImage(row.cover)"
               :preview-src-list="[ `/common/download?name=${row.cover}` ]">
               <div slot="error" class="image-slot">
-                <img src="./../../images/noImg.png" style="width: auto; height: 60px; border:none;">
+                <img src="./../../images/noImg.png" style="width: 80px; height: 80px; border:none;">
               </div>
             </el-image>
           </template>
@@ -300,7 +300,7 @@
         statusHandle (row) {
           this.id = row.id
           this.status = row.status
-          this.$confirm('确认调整该账号的状态?', '提示', {
+          this.$confirm('确认调整该商品的状态?', '提示', {
             'confirmButtonText': '确定',
             'cancelButtonText': '取消',
             'type': 'warning'
@@ -308,7 +308,7 @@
             updateGoodsStatus({ 'id': this.id, 'status': !this.status ? 1 : 0 }).then(res => {
               console.log('enableOrDisableEmployee', res)
               if (res.code === 0) {
-                this.$message.success('账号状态更改成功！')
+                this.$message.success('商品状态更改成功！')
                 this.handleQuery()
               }
             }).catch(err => {

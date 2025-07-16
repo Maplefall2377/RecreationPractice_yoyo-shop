@@ -129,7 +129,7 @@
         statusHandle (row) {
           this.id = row.id
           this.status = row.status
-          this.$confirm('确认调整该账号的状态?', '提示', {
+          this.$confirm('确认调整该分类的状态?', '提示', {
             'confirmButtonText': '确定',
             'cancelButtonText': '取消',
             'type': 'warning'
@@ -137,7 +137,7 @@
             updateType({ 'id': this.id, 'status': !this.status ? 1 : 0 }).then(res => {
               console.log('enableOrDisableEmployee', res)
               if (res.code === 0) {
-                this.$message.success('账号状态更改成功！')
+                this.$message.success('分类状态更改成功！')
                 this.handleQuery()
               }
             }).catch(err => {

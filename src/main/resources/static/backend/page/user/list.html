@@ -13,7 +13,9 @@
   <style>
     #member-app .notAdmin::after {
       border: 0 !important;
-
+    }
+    .blueBugGray {
+      color: #419eff !important;
     }
   </style>
 </head>
@@ -37,7 +39,7 @@
         <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column label="账号状态">
           <template slot-scope="scope">
-            {{ String(scope.row.status) === '0' ? '已禁用' : '正常' }}
+            {{ scope.row.status == 0 ? '已禁用' : '正常' }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="160" align="center">
@@ -46,7 +48,7 @@
               :class="{notAdmin:user !== 'admin'}">
               编辑
             </el-button>
-            <el-button type="text" size="small" class="delBut non" @click="statusHandle(scope.row)">
+            <el-button type="text" size="small" :class="scope.row.status === 1?'delBut non':'blueBugGray'" @click="statusHandle(scope.row)">
               {{ scope.row.status == 1 ? '禁用' : '启用' }}
             </el-button>
 

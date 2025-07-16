@@ -9,6 +9,7 @@ import tech.maplefall.entity.Order;
 import tech.maplefall.service.IOrderService;
 import tech.maplefall.util.Result;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -20,7 +21,12 @@ public class OrderController {
     private IOrderService orderService;
 
     @GetMapping("/listspage")
-    public Result list(Integer page, Integer pageSize, String orderNumber, Integer status, Integer paytype){
+    public Result list(Integer page, Integer pageSize, String orderNumber, Integer status, Integer paytype, HttpServletRequest request) {
+        // 未登录管理员无法进行以下操作
+        String tokenAdmin = request.getHeader("token-admin");
+        if (tokenAdmin == null || "".equals(tokenAdmin)) {
+            return Result.error("NOTLOGIN");
+        }
         if (page == null){
             page= 1;
         }
@@ -36,7 +42,12 @@ public class OrderController {
     }
 
     @PutMapping("/updateStatus/{id}/{status}")
-    public Result updateStatus(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
+    public Result updateStatus(@PathVariable("id") Integer id, @PathVariable("status") Integer status, HttpServletRequest request) {
+        // 未登录管理员无法进行以下操作
+        String tokenAdmin = request.getHeader("token-admin");
+        if (tokenAdmin == null || "".equals(tokenAdmin)) {
+            return Result.error("NOTLOGIN");
+        }
         Order order = new Order();
         order.setId(id);
         order.setStatus(status);

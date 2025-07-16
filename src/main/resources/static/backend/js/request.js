@@ -11,9 +11,9 @@
   service.interceptors.request.use(config => {
     // 是否需要设置 token
     const isToken = (config.headers || {}).isToken === false
-    let token = localStorage.getItem('token-admin');
+    let token = localStorage.getItem("token-admin");
     if (token && !isToken) {
-      config.headers['token-admin'] = token // 让每个请求携带自定义token 请根据实际情况自行修改,没有写gettoken()
+      config.headers['token-admin'] =token // 让每个请求携带自定义token 请根据实际情况自行修改
     }
     // get请求映射params参数
     if (config.method === 'get' && config.params) {
@@ -45,9 +45,10 @@
 
   // 响应拦截器
   service.interceptors.response.use(res => {
-      if (res.data.code === 0 && res.data.msg === 'NOTLOGIN') {// 返回登录页面
+      // if (res.data.code === 500 && res.data.msg === 'NOTLOGIN') {// 返回登录页面
+      if (res.data.msg === 'NOTLOGIN') {// 返回登录页面
         console.log('---/backend/page/login/login.html---')
-        localStorage.removeItem('userInfo')
+        localStorage.removeItem('token-admin')
         window.top.location.href = '/backend/page/login/login.html'
       } else {
         return res.data
