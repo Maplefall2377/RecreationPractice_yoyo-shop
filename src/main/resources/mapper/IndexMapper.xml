@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tech.maplefall.mapper.IndexMapper">
+
+    <!--显示已启用商品分类，常在小列表中展示商品分类-->
+    <select id="getEnableTypeLists" resultType="Type">
+        select * from type where status = 1
+    </select>
+
+    <!--查询今日选择（今日推荐，即查询榜单类型为1）-->
+    <select id="getRecommend" resultMap = "BaseMapGoods">
+        select * from goods g join top t
+        on g.id = t.goods_id
+        where g.`status` = 1 and t.type = #{type}
+        order by g.id desc LIMIT 3
+    </select>
+
+    <resultMap id="BaseMapGoods" type="Goods">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="price" property="price"/>
+        <result column="intro" property="intro"/>
+        <result column="cover" property="cover"/>
+        <result column="image1" property="image1"/>
+        <result column="image2" property="image2"/>
+        <result column="stock" property="stock"/>
+        <result column="type_id" property="typeId"/>
+        <result column="status" property="status"/>
+        <association property="top" javaType="Top">
+            <id column="id" property="id"/>
+            <result column="type" property="type"/>
+            <result column="goods_id" property="goodsId"/>
+        </association>
+    </resultMap>
+
+</mapper>

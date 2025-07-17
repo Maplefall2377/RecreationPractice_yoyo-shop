@@ -17,4 +17,5 @@ public class Goods {
 
     // 一对一
     private Type type;//商品类型
+    private Top top;// 榜单类型
 }
