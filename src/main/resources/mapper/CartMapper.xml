@@ -8,9 +8,14 @@
         SELECT * FROM cart WHERE user_id = #{userId}
     </select>
 
-    <!--根据购买人id查询购物车商品数量-->
+    <!--根据购买人id查询购物车商品总数量-->
     <select id="getCartCountByUserId" resultType="int">
-        SELECT COUNT(*) FROM cart WHERE user_id = #{userId}
+        SELECT sum(num) FROM cart WHERE user_id = #{userId}
+    </select>
+
+    <!--根据购买人id和购物车id查询购物车中该商品的数量-->
+    <select id="getSingleCartCountByUserId" resultType="int">
+        SELECT num FROM cart WHERE user_id = #{userId} AND id = #{cartId}
     </select>
 
     <!--添加商品到购物车-->
@@ -20,4 +25,16 @@
         FROM goods g
         WHERE g.id = #{goodsId}
     </insert>
+
+    <!--从购物车中删除商品-->
+    <delete id="delCart">
+        DELETE FROM cart WHERE id = #{cartId}
+    </delete>
+
+    <!--更改购物车中某商品的数量-->
+    <update id="updateCartNum">
+        UPDATE cart
+        SET num = num + #{num}
+        WHERE id = #{cartId}
+    </update>
 </mapper>

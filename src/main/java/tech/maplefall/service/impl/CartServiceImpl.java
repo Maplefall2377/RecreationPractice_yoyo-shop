@@ -25,7 +25,22 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
+    public Integer getSingleCartCountByUserId(Integer userId, Integer cartId) {
+        return cartMapper.getSingleCartCountByUserId(userId, cartId);
+    }
+
+    @Override
     public Integer addCart(Integer goodsId, Integer userId) {
         return cartMapper.addCart(goodsId, userId);
+    }
+
+    @Override
+    public Integer delCart(Integer cartId, Integer userId) {
+        return cartMapper.delCart(cartId, userId);
+    }
+
+    @Override
+    public Integer updateCartNum(Integer num, Integer cartId) {
+        return cartMapper.updateCartNum(num, cartId);
     }
 }
