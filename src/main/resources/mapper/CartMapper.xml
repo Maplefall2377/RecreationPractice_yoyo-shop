@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tech.maplefall.mapper.CartMapper">
+
+    <!--根据用户id查询购物车列表-->
+    <select id="getCartListByUserId" resultType="Cart">
+        SELECT * FROM cart WHERE user_id = #{userId}
+    </select>
+
+    <!--根据购买人id查询购物车商品数量-->
+    <select id="getCartCountByUserId" resultType="int">
+        SELECT COUNT(*) FROM cart WHERE user_id = #{userId}
+    </select>
+
+    <!--添加商品到购物车-->
+    <insert id="addCart">
+        INSERT INTO cart (title, pic, price, goods_id, user_id)
+        SELECT `name`, cover, price, id, #{userId}
+        FROM goods g
+        WHERE g.id = #{goodsId}
+    </insert>
+</mapper>
