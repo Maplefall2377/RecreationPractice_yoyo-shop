@@ -40,6 +40,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User getUserByName(String username) {
+        return userMapper.getUserByName(username);
+    }
+
+    @Override
     public boolean updateUser(User user) {
         return userMapper.updateUser(user) > 0 ? true : false;
     }
