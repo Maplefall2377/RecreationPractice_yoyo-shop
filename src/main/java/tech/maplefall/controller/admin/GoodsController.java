@@ -70,12 +70,7 @@ public class GoodsController {
 
     //根据Id查询商品详情
     @GetMapping("/detail/{id}")
-    public Result details(@PathVariable Integer id, HttpServletRequest request) {
-        // 未登录管理员无法进行以下操作
-        String tokenAdmin = request.getHeader("token-admin");
-        if (tokenAdmin == null || "".equals(tokenAdmin)) {
-            return Result.error("NOTLOGIN");
-        }
+    public Result details(@PathVariable Integer id) {
         Goods goods = goodsService.goodsDetails(id);
         return goods != null ? Result.success(goods) : Result.error("查询失败");
     }

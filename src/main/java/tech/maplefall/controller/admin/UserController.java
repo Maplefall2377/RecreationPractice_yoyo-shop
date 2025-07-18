@@ -31,6 +31,34 @@ public class UserController {
     @Autowired
     private RedisUtils redisUtils;
 
+    //用户注册
+    @PostMapping("/register")
+    public Result register(@RequestParam String username,
+                           @RequestParam String password,
+                           @RequestParam String name,
+                           @RequestParam String phone,
+                           @RequestParam String address) {
+        // 检查用户名是否已存在
+        if (userService.checkExistsUserName(username)) {
+            return Result.error("用户名已存在");
+        }
+        // 检查手机号是否已存在
+        if (userService.checkExistsPhone(phone)) {
+            return Result.error("手机号已存在");
+        }
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(SafeUtils.encode(password)); //密码加密
+        user.setName(name);
+        user.setPhone(phone);
+        user.setAddress(address);
+        if (userService.addUser(user)) {
+            return Result.success("注册成功");
+        } else {
+            return Result.error("注册失败，请稍后再试");
+        }
+    }
+
     //用户登录
     @PostMapping("/login")
     public Result login(@RequestParam String username, @RequestParam String password){
@@ -117,6 +145,41 @@ public class UserController {
         return Result.success("请求成功", user);
     }
 
+    //更改用户信息，用于前端用户自己更改
+    @PostMapping("/updateUserInfo")
+    public Result updateUserInfo(@RequestParam String name, @RequestParam String phone, @RequestParam String address, @RequestParam String token) {
+        //根据token获取用户信息
+        if (token == null || "".equals(token)) {
+            return Result.error("用户未登录");
+        }
+
+        Object userIdObj = redisUtils.hget(token, "id");
+        if (userIdObj == null) {
+            return Result.error("用户未登录或登录已过期");
+        }
+        Integer userId = Integer.valueOf(userIdObj.toString());
+        User user = userService.getUserById(userId);
+
+        if (user == null) {
+            return Result.error("用户不存在");
+        }
+
+        user.setName(name);
+        user.setPhone(phone);
+        user.setAddress(address);
+        boolean isUpdated = userService.updateUser(user);
+        if (isUpdated) {
+            // 更新redis中的用户信息
+            Map<String, Object> userMap = objectMapper.convertValue(user, new TypeReference<Map<String, Object>>() {});
+            redisUtils.hmset(token, userMap, 7200); // 设置过期时间为2小时
+            return Result.success("修改成功");
+        }
+        else
+        {
+            return Result.error();
+        }
+    }
+
     //查询所有用户
     @GetMapping("/lists")
     private Result lists(Integer page, Integer pageSize, String name, HttpServletRequest request) {
@@ -184,9 +247,9 @@ public class UserController {
         if (tokenAdmin == null || "".equals(tokenAdmin)) {
             return Result.error("NOTLOGIN");
         }
-//        //密码加密（老师没加）
-//        String pwd = SafeUtils.encode(user.getPassword());//加密密码
-//        user.setPassword(pwd);
+        //密码加密（老师没加）
+        String pwd = SafeUtils.encode(user.getPassword());//加密密码
+        user.setPassword(pwd);
         boolean flag = userService.updateUser(user);
         return flag ? Result.success("修改成功") : Result.error("修改失败");
     }
