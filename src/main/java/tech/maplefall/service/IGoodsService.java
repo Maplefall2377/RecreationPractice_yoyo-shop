@@ -13,4 +13,5 @@ public interface IGoodsService {
     Goods goodsDetails(Integer id);//根据ID查询商品详情
     boolean delGoods(Integer id);//删除商品
     boolean updateGoodsType(Integer id, Integer type);//根据ID修改商品类型
+    List<Goods> rankGoodsBySales();//根据销量排行商品
 }

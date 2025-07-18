@@ -56,4 +56,9 @@ public class GoodsServiceImpl implements IGoodsService {
     public boolean updateGoodsType(Integer id, Integer type) {
         return topMapper.updateTopType(id, type) > 0 ? true : false;
     }
+
+    @Override
+    public List<Goods> rankGoodsBySales() {
+        return goodsMapper.rankGoodsBySales();
+    }
 }

@@ -97,4 +97,9 @@ public class GoodsController {
         return goodsService.updateGoodsType(top.getId(), top.getType()) ? Result.success("商品榜单类型修改成功") : Result.error("商品榜单类型修改失败");
     }
 
+    @GetMapping("/ranking")
+    public Result rankGoodsBySales() {
+        List<Goods> goodsList = goodsService.rankGoodsBySales();
+        return Result.success(goodsList);
+    }
 }

@@ -147,4 +147,13 @@
     <delete id="delGoods">
         delete from goods where id = #{id}
     </delete>
+
+    <!--按照销量排行商品-->
+    <select id="rankGoodsBySales" resultType="Goods">
+        SELECT g.*
+        FROM goods g JOIN item i ON i.goods_id = g.id
+        GROUP BY g.id
+        ORDER BY SUM(i.amount) DESC
+        LIMIT 5
+    </select>
 </mapper>

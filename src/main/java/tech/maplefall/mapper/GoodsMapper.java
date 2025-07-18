@@ -11,4 +11,5 @@ public interface GoodsMapper {
     int saveGoods(Goods goods);//添加商品
     Goods getGoodsById(Integer id);//根据ID查询商品
     int delGoods(Integer id);//删除商品
+    List<Goods> rankGoodsBySales();//根据销量排行商品
 }
