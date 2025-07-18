@@ -1,4 +1,4 @@
-package tech.maplefall.controller;
+package tech.maplefall.controller.admin;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -100,7 +100,24 @@ public class UserController {
     }
 
 
-    //查询用户是否存在
+    // 查询单个用户信息，可用于前端个人中心
+    @PostMapping("/getUserInfo")
+    public Result getUserInfo(@RequestParam String token) {
+        //根据token获取用户信息
+        if (token == null || "".equals(token)) {
+            return Result.error("用户未登录");
+        }
+
+        Object userIdObj = redisUtils.hget(token, "id");
+        if (userIdObj == null) {
+            return Result.error("用户未登录或登录已过期");
+        }
+        Integer userId = Integer.valueOf(userIdObj.toString());
+        User user = userService.getUserById(userId);
+        return Result.success("请求成功", user);
+    }
+
+    //查询所有用户
     @GetMapping("/lists")
     private Result lists(Integer page, Integer pageSize, String name, HttpServletRequest request) {
         // 未登录管理员无法进行以下操作

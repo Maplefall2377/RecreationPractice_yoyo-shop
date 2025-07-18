@@ -1,4 +1,4 @@
-package tech.maplefall.controller;
+package tech.maplefall.controller.admin;
 
 
 import lombok.extern.slf4j.Slf4j;

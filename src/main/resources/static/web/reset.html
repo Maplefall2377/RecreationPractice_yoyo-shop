@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>重置页面</title>
     <!-- 引入外部样式 -->
-    <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/font.css" />
+    <link rel="stylesheet" href="/web/css/reset.css" />
+    <link rel="stylesheet" href="/web/css/font.css" />
     <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4688232_r0dj3sysbq.css" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/common.css" />
-    <link rel="stylesheet" href="/css/login.css" />
-    <link rel="stylesheet" href="/css/reset_pwd.css" />
+    <link rel="stylesheet" href="/web/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/web/css/common.css" />
+    <link rel="stylesheet" href="/web/css/login.css" />
+    <link rel="stylesheet" href="/web/css/reset_pwd.css" />
     <!-- 引入外部的js文件 -->
-    <script src="/js/jquery-3.7.1.js"></script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/web/js/jquery-3.7.1.js"></script>
+    <script src="/web/js/bootstrap.bundle.min.js"></script>
 </head>
+
 <body>
     <!--头部-->
     <header>
@@ -76,19 +78,19 @@
                     <input id="phone" placeholder="请输入手机号" />
                 </div>
                 <div class="item_code">
-                    <input id="code" placeholder="请输入验证码"  type="text" />
-                    <button id="send_code" >发送验证码</button>
+                    <input id="code" placeholder="请输入验证码" type="text" />
+                    <button id="send_code">发送验证码</button>
                 </div>
                 <button class="btn" disabled id="handle_next">下一步</button>
             </div>
             <div id="two">
                 <div class="item">
                     <p class="label">新密码<span>*</span></p>
-                    <input id="password" placeholder="请输入密码"  type="password" />
+                    <input id="password" placeholder="请输入密码" type="password" />
                 </div>
                 <div class="item">
                     <p class="label">确认新密码<span>*</span></p>
-                    <input id="confirm_password" placeholder="请输入确认密码"  type="password" />
+                    <input id="confirm_password" placeholder="请输入确认密码" type="password" />
                 </div>
                 <div class="btn" id="handle_pwd">提交</div>
             </div>
@@ -102,16 +104,16 @@
     </div>
     <!-- 底部 -->
     <footer>
-            <span>
-                lanou © All rights Reseverd
-            </span>
+        <span>
+            lanou © All rights Reseverd
+        </span>
     </footer>
     <script>
         // 获取页面中id=kinds的标签（对象）
         let kinds = document.querySelector('#kinds')
         // 把你们函数赋值给标签的点击事件
         let state = false  // false 隐藏  true展示
-        kinds.onclick = function(e){
+        kinds.onclick = function (e) {
             // 阻止冒泡
             e.stopPropagation()
             // 获取页面中class="drop-select"的标签只会获取一个
@@ -121,7 +123,7 @@
             // 记录当前下拉框的显示状态
             state = !state
         }
-        document.body.onclick = function(){
+        document.body.onclick = function () {
             // 获取页面中class="drop-select"的标签只会获取一个
             let dropSelect = document.querySelector('.drop-select')
             // 页面中展示标签
@@ -130,7 +132,8 @@
             state = false
         }
     </script>
-    <script src="/js/common.js"></script>
-    <script src="/js/reset_pwd.js"></script>
+    <script src="/web/js/common.js"></script>
+    <script src="/web/js/reset_pwd.js"></script>
 </body>
+
 </html>

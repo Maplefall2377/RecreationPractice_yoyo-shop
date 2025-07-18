@@ -1,4 +1,4 @@
-package tech.maplefall.controller;
+package tech.maplefall.controller.admin;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;

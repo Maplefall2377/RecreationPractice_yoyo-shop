@@ -66,4 +66,10 @@
         </set>
         where id = #{id}
     </update>
+
+    <!--根据用户id获取订单列表-->
+    <select id="getOrdersByUserId" resultMap="BaseOrderAndItem">
+        select * from `order` o
+        where o.user_id = #{userId}
+    </select>
 </mapper>

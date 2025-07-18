@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>注册页面</title>
     <!-- 引入外部样式 -->
-    <link rel="stylesheet" href="/css/reset.css"></link>
-    <link rel="stylesheet" href="/css/font.css" />
+    <link rel="stylesheet" href="/web/css/reset.css">
+    </link>
+    <link rel="stylesheet" href="/web/css/font.css" />
     <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4688232_r0dj3sysbq.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/common.css">
-    <link rel="stylesheet" href="/css/register.css"></link>
+    <link rel="stylesheet" href="/web/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/web/css/common.css">
+    <link rel="stylesheet" href="/web/css/register.css">
+    </link>
     <!-- 引入外部的js文件 -->
-    <script src="/js/jquery-3.7.1.js"></script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/web/js/jquery-3.7.1.js"></script>
+    <script src="/web/js/bootstrap.bundle.min.js"></script>
 </head>
+
 <body>
     <!--头部-->
     <header>
@@ -75,28 +79,28 @@
             </div>
             <div class="item">
                 <p class="label">密码<span>*</span></p>
-                <input id="password" placeholder="请输入密码"  type="password" />
+                <input id="password" placeholder="请输入密码" type="password" />
             </div>
             <div class="item">
                 <p class="label">真实姓名<span>*</span></p>
-                <input id="real_name" type="input" placeholder="请输入真实姓名"/>
+                <input id="real_name" type="input" placeholder="请输入真实姓名" />
             </div>
             <div class="item">
                 <p class="label">手机号码<span>*</span></p>
-                <input id="phone" type="input" placeholder="请输入11位手机号"/>
+                <input id="phone" type="input" placeholder="请输入11位手机号" />
             </div>
             <div class="item">
                 <p class="label">家庭住址<span>*</span></p>
-                <input id="address" type="input" placeholder="请输入家庭住址"/>
+                <input id="address" type="input" placeholder="请输入家庭住址" />
             </div>
             <div class="btn" id="handle_register">提交注册</div>
         </div>
     </div>
     <!-- 底部 -->
     <footer>
-            <span>
-                lanou © All rights Reseverd
-            </span>
+        <span>
+            lanou © All rights Reseverd
+        </span>
     </footer>
 
     <script>
@@ -104,7 +108,7 @@
         let kinds = document.querySelector('#kinds')
         // 把你们函数赋值给标签的点击事件
         let state = false  // false 隐藏  true展示
-        kinds.onclick = function(e){
+        kinds.onclick = function (e) {
             // 阻止冒泡
             e.stopPropagation()
             // 获取页面中class="drop-select"的标签只会获取一个
@@ -114,7 +118,7 @@
             // 记录当前下拉框的显示状态
             state = !state
         }
-        document.body.onclick = function(){
+        document.body.onclick = function () {
             // 获取页面中class="drop-select"的标签只会获取一个
             let dropSelect = document.querySelector('.drop-select')
             // 页面中展示标签
@@ -123,7 +127,8 @@
             state = false
         }
     </script>
-    <script src="/js/common.js"></script>
-    <script src="/js/register.js"></script>
+    <script src="/web/js/common.js"></script>
+    <script src="/web/js/register.js"></script>
 </body>
+
 </html>

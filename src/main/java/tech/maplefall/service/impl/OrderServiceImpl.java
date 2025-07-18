@@ -22,4 +22,9 @@ public class OrderServiceImpl implements IOrderService {
     public boolean updateStatus(Order order) {
         return orderMapper.updateStatus(order) > 0 ? true : false;
     }
+
+    @Override
+    public List<Order> getOrdersByUserId(Integer userId) {
+        return orderMapper.getOrdersByUserId(userId);
+    }
 }

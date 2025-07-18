@@ -9,11 +9,11 @@
     </select>
 
     <!--查询今日选择（今日推荐，即查询榜单类型为1）-->
-    <select id="getRecommend" resultMap = "BaseMapGoods">
+    <select id="getRecommendForIndex" resultMap = "BaseMapGoods">
         select * from goods g join top t
         on g.id = t.goods_id
         where g.`status` = 1 and t.type = #{type}
-        order by g.id desc LIMIT 3
+        order by g.id LIMIT 3
     </select>
 
     <resultMap id="BaseMapGoods" type="Goods">
@@ -34,4 +34,52 @@
         </association>
     </resultMap>
 
+    <!--根据商品名字关键词获取商品列表-->
+    <select id="getGoodsByKeyword" resultType="Goods">
+        select * from goods g
+        where g.`status` = 1 and g.name like concat('%', #{keyword}, '%')
+        order by g.id
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <!--根据商品名关键词获取商品数量-->
+    <select id="getCountByKeyword" resultType="int">
+        select count(*) from goods g
+        where g.`status` = 1 and g.name like concat('%', #{keyword}, '%')
+    </select>
+
+    <!--根据商品分类id获取分类详情-->
+    <select id="getTypeById" resultType="Type">
+        select * from type where id = #{typeId}
+    </select>
+
+    <!--根据商品分类id获取商品列表-->
+    <select id="getGoodsByTypeId" resultType="Goods">
+        select * from goods g
+        where g.`status` = 1 and g.type_id = #{typeId}
+        order by g.id
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <!--根据商品分类id获取商品数量-->
+    <select id="getCountByTypeId" resultType="int">
+        select count(*) from goods g
+        where g.`status` = 1 and g.type_id = #{typeId}
+    </select>
+
+    <!--根据榜单id从榜单中获取不同类型推荐商品列表，用于各榜单展示-->
+    <select id="getRecommendPage" resultType="Goods">
+        select * from goods g join top t
+        on g.id = t.goods_id
+        where g.`status` = 1 and t.type = #{topTypeId}
+        order by g.id
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <!--根据榜单id获取榜单商品数量-->
+    <select id="getCountByTopTypeId" resultType="int">
+        select count(*) from goods g join top t
+        on g.id = t.goods_id
+        where g.`status` = 1 and t.type = #{topTypeId}
+    </select>
 </mapper>
