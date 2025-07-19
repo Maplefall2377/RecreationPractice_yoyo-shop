@@ -43,4 +43,14 @@ public class CartServiceImpl implements ICartService {
     public Integer updateCartNum(Integer num, Integer cartId) {
         return cartMapper.updateCartNum(num, cartId);
     }
+
+    @Override
+    public Integer moveCartToItem(Integer userId, Integer orderId) {
+        return cartMapper.moveCartToItem(userId, orderId);
+    }
+
+    @Override
+    public Integer clearCartByUserId(Integer userId) {
+        return cartMapper.clearCartByUserId(userId);
+    }
 }

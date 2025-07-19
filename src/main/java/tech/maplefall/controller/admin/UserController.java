@@ -186,6 +186,7 @@ public class UserController {
         // 未登录管理员无法进行以下操作
         String tokenAdmin = request.getHeader("token-admin");
         if (tokenAdmin == null || "".equals(tokenAdmin)) {
+            // 可以加一个!redisUtils.hasKey(tokenAdmin)作为新的或条件来检查token是否在redis中，拓宽判断条件，后续的所有用到管理员token判断都需要更改
             return Result.error("NOTLOGIN");
         }
         if (page == null) {

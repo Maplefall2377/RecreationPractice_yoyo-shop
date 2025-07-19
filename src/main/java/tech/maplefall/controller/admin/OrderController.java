@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tech.maplefall.entity.Order;
+import tech.maplefall.service.ICartService;
 import tech.maplefall.service.IOrderService;
 import tech.maplefall.util.RedisUtils;
 import tech.maplefall.util.Result;
@@ -20,6 +21,9 @@ public class OrderController {
 
     @Autowired
     private IOrderService orderService;
+
+    @Autowired
+    private ICartService cartService;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -74,5 +78,30 @@ public class OrderController {
         // 获取用户订单列表
         List<Order> orderList = orderService.getOrdersByUserId(userId);
         return Result.success("请求成功", orderList);
+    }
+
+    // 提交订单
+    @PostMapping("/submit")
+    public Result submitOrder(@RequestParam String token, @RequestParam("payType") Integer paytype, @RequestParam("name") String name, @RequestParam("phone") String phone, @RequestParam("address") String address) {
+        //根据token获取用户信息
+        if (token == null || "".equals(token)) {
+            return Result.error("用户未登录");
+        }
+
+        Object userIdObj = redisUtils.hget(token, "id");
+        if (userIdObj == null) {
+            return Result.error("用户未登录或登录已过期");
+        }
+        Integer userId = Integer.valueOf(userIdObj.toString());
+
+        // 提交订单
+        int orderId = orderService.submitOrder(userId, paytype, name, phone, address);
+        int mcti = cartService.moveCartToItem(userId, orderId); // 将购物车中的商品移动到订单项中
+        int ccbu = cartService.clearCartByUserId(userId); // 清空用户的购物车
+        if (orderId > 0 && mcti > 0 && ccbu > 0) {
+            return Result.success("订单提交成功", orderId);
+        } else {
+            return Result.error("订单提交失败");
+        }
     }
 }

@@ -27,4 +27,18 @@ public class OrderServiceImpl implements IOrderService {
     public List<Order> getOrdersByUserId(Integer userId) {
         return orderMapper.getOrdersByUserId(userId);
     }
+
+    @Override
+    public int submitOrder(Integer userId, Integer payType, String name, String phone, String address) {
+        Order order = new Order();
+        order.setUserId(userId);
+        order.setPaytype(payType);
+        order.setName(name);
+        order.setPhone(phone);
+        order.setAddress(address);
+
+        orderMapper.submitOrder(order);
+
+        return order.getId(); // 返回生成的主键
+    }
 }

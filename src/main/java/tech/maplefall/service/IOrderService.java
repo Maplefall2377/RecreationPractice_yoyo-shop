@@ -9,4 +9,5 @@ public interface IOrderService {
     List<Order> lists(String orderNumber, Integer status, Integer paytype); //查询订单列表
     boolean updateStatus(Order order); //更新订单状态
     List<Order> getOrdersByUserId(@Param("userId") Integer userId); // 根据用户ID获取订单列表
+    int submitOrder(Integer userId, Integer payType, String name, String phone, String address);// 提交订单，返回订单号
 }

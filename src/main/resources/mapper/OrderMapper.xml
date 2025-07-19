@@ -72,4 +72,22 @@
         select * from `order` o
         where o.user_id = #{userId}
     </select>
+
+    <!--提交订单-->
+    <insert id="submitOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
+        insert into `order` (order_number, total, amount, `status`, paytype, `name`, phone, address, user_id)
+        select
+            concat("YY", DATE_FORMAT(CURRENT_TIMESTAMP,'%Y%m%d%H%i%s'), #{userId}),
+            sum(c.price),
+            sum(c.num),
+            2,
+            #{paytype},
+            #{name},
+            #{phone},
+            #{address},
+            #{userId}
+        from cart c
+        where c.user_id = #{userId}
+        group by c.user_id
+    </insert>
 </mapper>

@@ -37,4 +37,17 @@
         SET num = num + #{num}
         WHERE id = #{cartId}
     </update>
+
+    <!--将购物车中物品移到订单项中-->
+    <insert id="moveCartToItem">
+        INSERT INTO item (title, pic, price, amount, goods_id, order_id)
+        SELECT title, pic, price, num, goods_id, #{orderId}
+        FROM cart
+        WHERE user_id = #{userId}
+    </insert>
+
+    <!--清空用户的购物车-->
+    <delete id="clearCartByUserId">
+        DELETE FROM cart WHERE user_id = #{userId}
+    </delete>
 </mapper>
