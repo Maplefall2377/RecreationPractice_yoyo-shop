@@ -180,6 +180,94 @@ public class UserController {
         }
     }
 
+    //检查手机号是否存在，用于重制用户密码
+    @PostMapping("/checkPhone")
+    public Result checkPhone(@RequestParam String phone) {
+        if (phone == null || "".equals(phone)) {
+            return Result.error("手机号不能为空");
+        }
+        boolean exists = userService.checkExistsPhone(phone);
+        if (exists) {
+            return Result.success("手机号已存在");
+        } else {
+            return Result.error("手机号不存在");
+        }
+    }
+
+    //获取验证码，根据随机数获得
+    @PostMapping("/sendSMS")
+    public Result sendSMS(@RequestParam String phone) {
+        if (phone == null || "".equals(phone)) {
+            return Result.error("手机号不能为空");
+        }
+        // 生成6位随机验证码
+        String code = String.valueOf((int) ((Math.random() * 9 + 1) * 100000));
+        // 将验证码存入redis，设置过期时间为5分钟
+        redisUtils.set(phone, code, 300);
+        // 这里可以添加发送短信的逻辑
+        return Result.success("验证码获取成功", code);
+    }
+
+    //检查验证码
+    @PostMapping("/checkCode")
+    public Result checkCode(@RequestParam String phone, @RequestParam String code) {
+        if (phone == null || "".equals(phone)) {
+            return Result.error("手机号不能为空");
+        }
+        if (code == null || "".equals(code)) {
+            return Result.error("验证码不能为空");
+        }
+        // 从redis中获取验证码
+        String storedCode = redisUtils.get(phone).toString();
+        if (storedCode == null || storedCode.isEmpty()) {
+            return Result.error("验证码已过期或不存在");
+        }
+        if (storedCode.equals(code)) {
+            return Result.success("验证码验证成功");
+        } else {
+            return Result.error("验证码错误");
+        }
+    }
+
+    // 重置密码
+    @PostMapping("/resetPwd")
+    public Result resetPwd(@RequestParam("phone") String phone, @RequestParam("code") String code, @RequestParam("password") String newPassword, @RequestParam("again_pwd") String againPassword) {
+        if (newPassword == null || "".equals(newPassword)) {
+            return Result.error("新密码不能为空");
+        }
+        if (againPassword == null || "".equals(againPassword)) {
+            return Result.error("确认密码不能为空");
+        }
+        if (!newPassword.equals(againPassword)) {
+            return Result.error("两次输入的密码不一致");
+        }
+
+        // 检查验证码
+        String storedCode = redisUtils.get(phone).toString();
+        if (storedCode == null || storedCode.isEmpty()) {
+            return Result.error("验证码已过期或不存在");
+        }
+        if (!storedCode.equals(code)) {
+            return Result.error("验证码错误");
+        }
+
+        // 检查手机号是否存在
+        User user = userService.getUserByPhone(phone);
+        if (user == null) {
+            return Result.error("手机号不存在");
+        }
+
+        // 更新密码
+        String safePwd = SafeUtils.encode(newPassword);
+        user.setPassword(safePwd);
+        boolean isUpdated = userService.updateUser(user);
+        if (isUpdated) {
+            return Result.success("密码重置成功");
+        } else {
+            return Result.error("密码重置失败");
+        }
+    }
+
     //查询所有用户
     @GetMapping("/lists")
     private Result lists(Integer page, Integer pageSize, String name, HttpServletRequest request) {

@@ -45,6 +45,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User getUserByPhone(String phone) {
+        return userMapper.getUserByPhone(phone);
+    }
+
+    @Override
     public boolean updateUser(User user) {
         return userMapper.updateUser(user) > 0 ? true : false;
     }
